@@ -1,24 +1,49 @@
 --- 
-:release_dependencies_generator: 
+:test_linker: 
   :arguments: []
-
-:unity: 
-  :defines: []
 
 :module_generator: 
   :project_root: ./
   :source_root: src/
   :test_root: test/
-:test_file_preprocessor: 
+:release_assembler: 
   :arguments: []
 
-:environment: 
-- :rake_columns: "120"
 :test_runner: 
+  :file_suffix: _runner
   :includes: []
 
-  :file_suffix: _runner
+:cmock: 
+  :verbosity: 3
+  :mock_prefix: mock_
+  :plugins: 
+  - :ignore
+  - :callback
+  :defines: []
+
+  :enforce_strict_ordering: true
+  :treat_as: 
+    uint8: HEX8
+    uint32: UINT32
+    int8: INT8
+    bool: UINT8
+    uint16: HEX16
+  :unity_helper: false
+  :mock_path: build/test/mocks
+  :when_no_prototypes: :warn
+:environment: 
+- :rake_columns: "120"
+:test_fixture: 
+  :arguments: []
+
+  :link_objects: []
+
+:cexception: 
+  :defines: []
+
 :files: 
+  :assembly: []
+
   :include: []
 
   :source: []
@@ -27,9 +52,37 @@
 
   :test: []
 
-  :assembly: []
+:release_build: 
+  :output: huffman
+  :artifacts: []
 
-:test_dependencies_generator: 
+  :use_assembly: false
+:release_linker: 
+  :arguments: []
+
+:project: 
+  :test_file_prefix: test_
+  :release_build: true
+  :use_auxiliary_dependencies: true
+  :options_paths: []
+
+  :use_exceptions: false
+  :use_test_preprocessor: true
+  :use_mocks: true
+  :compile_threads: 1
+  :build_root: build
+  :use_deep_dependencies: false
+  :test_threads: 1
+:plugins: 
+  :stdout_pretty_tests_report_path: vendor/ceedling/plugins/stdout_pretty_tests_report/lib
+  :module_generator_path: vendor/ceedling/plugins/module_generator/lib
+  :enabled: 
+  - stdout_pretty_tests_report
+  - module_generator
+  :load_paths: 
+  - vendor/ceedling/plugins
+  :display_raw_test_results: false
+:test_includes_preprocessor: 
   :arguments: []
 
 :defines: 
@@ -41,113 +94,15 @@
   - &id001 []
 
   - TEST
-  :release_preprocess: []
-
   :test: 
   - *id001
   - TEST
-:plugins: 
-  :stdout_pretty_tests_report_path: vendor/ceedling/plugins/stdout_pretty_tests_report/lib
-  :module_generator_path: vendor/ceedling/plugins/module_generator/lib
-  :display_raw_test_results: false
-  :enabled: 
-  - stdout_pretty_tests_report
-  - module_generator
-  :load_paths: 
-  - vendor/ceedling/plugins
-:test_compiler: 
+  :release_preprocess: []
+
+:release_dependencies_generator: 
   :arguments: []
 
-:tools: 
-  :test_file_preprocessor: 
-    :stderr_redirect: :none
-    :executable: gcc
-    :background_exec: :none
-    :arguments: 
-    - -E
-    - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
-    - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
-    - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
-    - -D$: DEFINES_TEST_PREPROCESS
-    - -DGNU_COMPILER
-    - "\"${1}\""
-    - -o "${2}"
-    :name: default_test_file_preprocessor
-    :optional: false
-  :test_compiler: 
-    :stderr_redirect: :none
-    :executable: gcc
-    :background_exec: :none
-    :arguments: 
-    - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
-    - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
-    - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
-    - -c ${1}
-    - -o ${2}
-    - ${4}
-    :name: test_compiler
-    :optional: false
-  :release_compiler: 
-    :stderr_redirect: :none
-    :executable: gcc
-    :background_exec: :none
-    :arguments: 
-    - -I"$": COLLECTION_PATHS_SOURCE_INCLUDE_VENDOR
-    - -I"$": COLLECTION_PATHS_RELEASE_TOOLCHAIN_INCLUDE
-    - -D$: COLLECTION_DEFINES_RELEASE_AND_VENDOR
-    - -DGNU_COMPILER
-    - -c ${1}
-    - -o ${2}
-    - ${4}
-    :name: release_compiler
-    :optional: false
-  :test_linker: 
-    :stderr_redirect: :none
-    :executable: gcc
-    :background_exec: :none
-    :arguments: 
-    - "\"${1}\""
-    - -o "${2}"
-    :name: default_test_linker
-    :optional: false
-  :test_fixture: 
-    :stderr_redirect: :auto
-    :executable: ${1}
-    :background_exec: :none
-    :arguments: []
-
-    :name: default_test_fixture
-    :optional: false
-  :release_linker: 
-    :stderr_redirect: :none
-    :executable: gcc
-    :background_exec: :none
-    :arguments: 
-    - "\"${1}\""
-    - -o "${2}"
-    :name: default_release_linker
-    :optional: false
-  :test_includes_preprocessor: 
-    :stderr_redirect: :none
-    :executable: gcc
-    :background_exec: :none
-    :arguments: 
-    - -E
-    - -MM
-    - -MG
-    - -I$: COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
-    - -I$: COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
-    - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
-    - -D$: DEFINES_TEST_PREPROCESS
-    - -DGNU_COMPILER
-    - -w
-    - "\"${1}\""
-    :name: default_test_includes_preprocessor
-    :optional: false
-:release_compiler: 
-  :arguments: []
-
-:cexception: 
+:unity: 
   :defines: []
 
 :paths: 
@@ -164,54 +119,101 @@
   - -:test/support
   :release_toolchain_include: []
 
-:test_linker: 
+:test_file_preprocessor: 
   :arguments: []
 
-:release_assembler: 
+:test_dependencies_generator: 
   :arguments: []
 
-:cmock: 
-  :verbosity: 3
-  :when_no_prototypes: :warn
-  :mock_path: build/test/mocks
-  :enforce_strict_ordering: true
-  :defines: []
-
-  :plugins: 
-  - :ignore
-  - :callback
-  :unity_helper: false
-  :treat_as: 
-    uint32: UINT32
-    int8: INT8
-    bool: UINT8
-    uint16: HEX16
-    uint8: HEX8
-  :mock_prefix: mock_
-:test_fixture: 
-  :link_objects: []
-
+:test_compiler: 
   :arguments: []
 
-:release_build: 
-  :use_assembly: false
-  :artifacts: []
+:tools: 
+  :test_linker: 
+    :stderr_redirect: :none
+    :arguments: 
+    - "\"${1}\""
+    - -o "${2}"
+    :executable: gcc
+    :background_exec: :none
+    :optional: false
+    :name: default_test_linker
+  :test_fixture: 
+    :stderr_redirect: :auto
+    :arguments: []
 
-  :output: huffman
-:release_linker: 
-  :arguments: []
-
-:extension: 
-  :testpass: .pass
-  :dependencies: .d
-  :source: .c
-  :testfail: .fail
-  :executable: .out
-  :list: .lst
-  :header: .h
-  :map: .map
-  :object: .o
-  :assembly: .s
+    :executable: ${1}
+    :background_exec: :none
+    :optional: false
+    :name: default_test_fixture
+  :release_linker: 
+    :stderr_redirect: :none
+    :arguments: 
+    - "\"${1}\""
+    - -o "${2}"
+    :executable: gcc
+    :background_exec: :none
+    :optional: false
+    :name: default_release_linker
+  :test_includes_preprocessor: 
+    :stderr_redirect: :none
+    :arguments: 
+    - -E
+    - -MM
+    - -MG
+    - -I$: COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
+    - -I$: COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
+    - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
+    - -D$: DEFINES_TEST_PREPROCESS
+    - -DGNU_COMPILER
+    - -w
+    - "\"${1}\""
+    :executable: gcc
+    :background_exec: :none
+    :optional: false
+    :name: default_test_includes_preprocessor
+  :test_file_preprocessor: 
+    :stderr_redirect: :none
+    :arguments: 
+    - -E
+    - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
+    - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
+    - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
+    - -D$: DEFINES_TEST_PREPROCESS
+    - -DGNU_COMPILER
+    - "\"${1}\""
+    - -o "${2}"
+    :executable: gcc
+    :background_exec: :none
+    :optional: false
+    :name: default_test_file_preprocessor
+  :test_compiler: 
+    :stderr_redirect: :none
+    :arguments: 
+    - -I"$": COLLECTION_PATHS_TEST_TOOLCHAIN_INCLUDE
+    - -I"$": COLLECTION_PATHS_TEST_SUPPORT_SOURCE_INCLUDE_VENDOR
+    - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
+    - -c ${1}
+    - -o ${2}
+    - ${4}
+    :background_exec: :none
+    :executable: gcc
+    :optional: false
+    :name: test_compiler
+  :release_compiler: 
+    :stderr_redirect: :none
+    :arguments: 
+    - -I"$": COLLECTION_PATHS_SOURCE_INCLUDE_VENDOR
+    - -I"$": COLLECTION_PATHS_RELEASE_TOOLCHAIN_INCLUDE
+    - -D$: COLLECTION_DEFINES_RELEASE_AND_VENDOR
+    - -DGNU_COMPILER
+    - -c ${1}
+    - -o ${2}
+    - ${4}
+    :background_exec: :none
+    :executable: gcc
+    :optional: false
+    :name: release_compiler
 :flags: 
   :release: 
     :compile: 
@@ -219,19 +221,17 @@
   :test: 
     :compile: 
       :huffman: -Wall -Wextra -std=c89 -pedantic -g
-:project: 
-  :use_test_preprocessor: true
-  :test_file_prefix: test_
-  :options_paths: []
-
-  :use_auxiliary_dependencies: true
-  :use_deep_dependencies: false
-  :use_mocks: true
-  :build_root: build
-  :compile_threads: 1
-  :release_build: true
-  :use_exceptions: false
-  :test_threads: 1
-:test_includes_preprocessor: 
+:release_compiler: 
   :arguments: []
 
+:extension: 
+  :assembly: .s
+  :dependencies: .d
+  :testpass: .pass
+  :source: .c
+  :testfail: .fail
+  :executable: .out
+  :list: .lst
+  :map: .map
+  :object: .o
+  :header: .h

@@ -1,21 +1,30 @@
 --- 
-:counts: 
-  :total: 2
-  :passed: 2
-  :failed: 0
-  :ignored: 0
+:successes: 
+- :message: ""
+  :line: 7
+  :test: testInsertSort
+- :message: ""
+  :line: 29
+  :test: testBuildAsciiGramCreatesCorrectCounts
+- :message: ""
+  :line: 44
+  :test: testInsertIntoSortedArray
+- :message: ""
+  :line: 65
+  :test: testInsertInArray
+- :message: ""
+  :line: 85
+  :test: testCreateSubTreet
+:failures: []
+
 :source: 
   :file: test_huffman.c
   :path: test
-:successes: 
-- :message: ""
-  :line: 5
-  :test: testFindFreqInString
-- :message: ""
-  :line: 36
-  :test: testInsertInArray
-:failures: []
-
+:counts: 
+  :passed: 5
+  :total: 5
+  :failed: 0
+  :ignored: 0
 :ignores: []
 
 :stdout: 

@@ -30,11 +30,12 @@ char* GlobalOrderError;
 //=======External Functions This Runner Calls=====
 extern void setUp(void);
 extern void tearDown(void);
-extern void testInsertSort(void);
-extern void testBuildAsciiGramCreatesCorrectCounts(void);
-extern void testInsertIntoSortedArray(void);
-extern void testInsertInArray(void);
-extern void testCreateSubTreet(void);
+extern void testToHeapListFirstTime(void);
+extern void testAfterNewListCantFindOldList(void);
+extern void testAfterNewListCanFindNewList(void);
+extern void testAfterNewListCanFindFirstListInOldList(void);
+extern void testFreeHeapListReturnsMeToTopOfOldList(void);
+extern void testCanNowFreeListTwiceWithoutExploding(void);
 
 
 //=======Test Reset Option=====
@@ -49,12 +50,13 @@ void resetTest(void)
 //=======MAIN=====
 int main(void)
 {
-  UnityBegin("test_huffman.c");
-  RUN_TEST(testInsertSort, 7);
-  RUN_TEST(testBuildAsciiGramCreatesCorrectCounts, 29);
-  RUN_TEST(testInsertIntoSortedArray, 44);
-  RUN_TEST(testInsertInArray, 65);
-  RUN_TEST(testCreateSubTreet, 85);
+  UnityBegin("test_memory.c");
+  RUN_TEST(testToHeapListFirstTime, 11);
+  RUN_TEST(testAfterNewListCantFindOldList, 31);
+  RUN_TEST(testAfterNewListCanFindNewList, 52);
+  RUN_TEST(testAfterNewListCanFindFirstListInOldList, 80);
+  RUN_TEST(testFreeHeapListReturnsMeToTopOfOldList, 108);
+  RUN_TEST(testCanNowFreeListTwiceWithoutExploding, 138);
 
   return (UnityEnd());
 }

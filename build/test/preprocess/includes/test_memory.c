@@ -1,5 +1,4 @@
 --- 
 - unity.h
-- huffman.h
 - memory.h
 - utilities.h

@@ -1,0 +1,34 @@
+--- 
+:ignores: []
+
+:source: 
+  :file: test_memory.c
+  :path: test
+:stdout: 
+- ""
+:counts: 
+  :failed: 0
+  :ignored: 0
+  :total: 6
+  :passed: 6
+:successes: 
+- :message: ""
+  :line: 11
+  :test: testToHeapListFirstTime
+- :message: ""
+  :line: 31
+  :test: testAfterNewListCantFindOldList
+- :message: ""
+  :line: 52
+  :test: testAfterNewListCanFindNewList
+- :message: ""
+  :line: 80
+  :test: testAfterNewListCanFindFirstListInOldList
+- :message: ""
+  :line: 108
+  :test: testFreeHeapListReturnsMeToTopOfOldList
+- :message: ""
+  :line: 138
+  :test: testCanNowFreeListTwiceWithoutExploding
+:failures: []
+

@@ -1,0 +1,3 @@
+this is a testing string file
+it has a few newlines and some
+numbers 1234. and punctuation
