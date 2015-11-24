@@ -1,16 +1,16 @@
 --- 
-:ignores: []
-
+:counts: 
+  :total: 6
+  :failed: 0
+  :ignored: 0
+  :passed: 6
 :source: 
   :file: test_memory.c
   :path: test
+:ignores: []
+
 :stdout: 
 - ""
-:counts: 
-  :failed: 0
-  :ignored: 0
-  :total: 6
-  :passed: 6
 :successes: 
 - :message: ""
   :line: 11

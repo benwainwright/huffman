@@ -10,7 +10,7 @@ void testInsertSort(void)
 
 {
 
-   int asciiGram[255] = {0};
+   int asciiGram[256] = {0};
 
    letter_t* letters = ((void *)0);
 
@@ -185,5 +185,43 @@ void testCreateSubTreet(void)
    UnityAssertEqualNumber((_U_SINT)(_UP)((letter2)), (_U_SINT)(_UP)((parent->right)), (((void *)0)), (_U_UINT)95, UNITY_DISPLAY_STYLE_HEX64);
 
    UnityAssertEqualNumber((_U_SINT)((11)), (_U_SINT)((parent->freq)), (((void *)0)), (_U_UINT)96, UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void testDeleteFromArrayPos(void)
+
+{
+
+   letter_t* letterArray = (letter_t*)malloc(sizeof(letter_t) * 4);
+
+   letter_t letter1 = { 'a', 2 };
+
+   letter_t letter2 = { 'z', 1 };
+
+   letter_t letter3 = { 'g', 4 };
+
+   letter_t letter4 = { 'h', 7 };
+
+   letterArray[0] = letter1;
+
+   letterArray[1] = letter2;
+
+   letterArray[2] = letter3;
+
+   letterArray[3] = letter4;
+
+   deleteArrayPos(&letterArray, 2, 4);
+
+   if ((((letterArray)) != ((void *)0))) {} else {UnityFail( (" Expected Non-NULL"), (_U_UINT)(_U_UINT)(_U_UINT)111);;};
+
+   UnityAssertEqualNumber((_U_SINT)(('z')), (_U_SINT)((letterArray[1].letter)), (((void *)0)), (_U_UINT)112, UNITY_DISPLAY_STYLE_INT);
+
+   UnityAssertEqualNumber((_U_SINT)((1)), (_U_SINT)((letterArray[1].freq)), (((void *)0)), (_U_UINT)113, UNITY_DISPLAY_STYLE_INT);
+
+   UnityAssertEqualNumber((_U_SINT)(('h')), (_U_SINT)((letterArray[2].letter)), (((void *)0)), (_U_UINT)114, UNITY_DISPLAY_STYLE_INT);
+
+   UnityAssertEqualNumber((_U_SINT)((7)), (_U_SINT)((letterArray[2].freq)), (((void *)0)), (_U_UINT)115, UNITY_DISPLAY_STYLE_INT);
 
 }

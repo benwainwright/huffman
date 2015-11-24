@@ -35,6 +35,7 @@ extern void testBuildAsciiGramCreatesCorrectCounts(void);
 extern void testInsertIntoSortedArray(void);
 extern void testInsertInArray(void);
 extern void testCreateSubTreet(void);
+extern void testDeleteFromArrayPos(void);
 
 
 //=======Test Reset Option=====
@@ -55,6 +56,7 @@ int main(void)
   RUN_TEST(testInsertIntoSortedArray, 44);
   RUN_TEST(testInsertInArray, 65);
   RUN_TEST(testCreateSubTreet, 85);
+  RUN_TEST(testDeleteFromArrayPos, 99);
 
   return (UnityEnd());
 }

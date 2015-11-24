@@ -1,13 +1,17 @@
 #include "huffman.h"
 
+void makeHuffTree(char* fileName)
+{
+
+}
 
 void makeFileAsciiGram(char* file, int** asciiGram)
 {
    int c;
-   *asciiGram = (int*)callocate(255, sizeof(int));
    FILE* fh = openFile(file, "r");
+   *asciiGram = (int*)callocate(256, sizeof(int));
    do {
-      if((c = getc(fh)) != EOF) {
+      if((c = getc(fh)) != EOF && c < 256) {
          (*asciiGram)[c]++;
       }
    } while(!feof(fh) && !ferror(fh));
@@ -27,7 +31,7 @@ void insertSortNoZeros(int* asciiGram, letter_t** letters)
 {
    int i, arrayLength = 0;
    letter_t letter;
-   for(i = 0; i < 255; i++) {
+   for(i = 0; i < 256; i++) {
       if(asciiGram[i] > 0) {
          letter.freq = asciiGram[i];
          letter.letter = (char) i;
@@ -39,7 +43,7 @@ void insertSortNoZeros(int* asciiGram, letter_t** letters)
 void insertSorted(letter_t** letters, int length, letter_t letter)
 {
    int i;
-   for(i = 0; i <= length; i++) {
+   for(i = 0; i < length; i++) {
       if(*letters != NULL && letter.freq < (*letters)[i].freq) {
          insertInArray(letters, letter, i, length);
          return;
@@ -59,4 +63,15 @@ void insertInArray(letter_t** array, letter_t item, int pos, int length)
       (*array)[i] = (*array)[i - 1];
    }
    (*array)[i] = item;
+}
+
+void deleteArrayPos(letter_t** array, int pos, int length)
+{
+   int i;
+   for(i = pos; i < length - 1; i++) {
+      (*array)[i] = (*array)[i + 1];
+   }
+   if((*array = (letter_t*)realloc(*array, sizeof(letter_t) * (length - 1))) == NULL) {
+      fprintf(stderr, "Memory allocation error");
+   }
 }

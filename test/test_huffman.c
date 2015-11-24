@@ -6,7 +6,7 @@
 
 void testInsertSort(void)
 {
-   int asciiGram[255] = {0};
+   int asciiGram[256] = {0};
    letter_t* letters = NULL;
    asciiGram['a'] = 4;
    asciiGram['b'] = 14;
@@ -94,4 +94,23 @@ void testCreateSubTreet(void)
    TEST_ASSERT_EQUAL_PTR(letter1, parent->left);
    TEST_ASSERT_EQUAL_PTR(letter2, parent->right);
    TEST_ASSERT_EQUAL_INT(11, parent->freq);
+}
+
+void testDeleteFromArrayPos(void)
+{
+   letter_t* letterArray = (letter_t*)malloc(sizeof(letter_t) * 4);
+   letter_t letter1 = { 'a', 2 };
+   letter_t letter2 = { 'z', 1 };
+   letter_t letter3 = { 'g', 4 };
+   letter_t letter4 = { 'h', 7 };
+   letterArray[0] = letter1;
+   letterArray[1] = letter2;
+   letterArray[2] = letter3;
+   letterArray[3] = letter4;
+   deleteArrayPos(&letterArray, 2, 4);
+   TEST_ASSERT_NOT_NULL(letterArray);
+   TEST_ASSERT_EQUAL_INT('z', letterArray[1].letter);
+   TEST_ASSERT_EQUAL_INT(1, letterArray[1].freq);
+   TEST_ASSERT_EQUAL_INT('h', letterArray[2].letter);
+   TEST_ASSERT_EQUAL_INT(7, letterArray[2].freq);
 }
