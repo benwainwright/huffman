@@ -1,0 +1,22 @@
+--- 
+:counts: 
+  :total: 2
+  :passed: 2
+  :failed: 0
+  :ignored: 0
+:source: 
+  :file: test_huffman.c
+  :path: test
+:successes: 
+- :message: ""
+  :line: 5
+  :test: testFindFreqInString
+- :message: ""
+  :line: 36
+  :test: testInsertInArray
+:failures: []
+
+:ignores: []
+
+:stdout: 
+- ""
