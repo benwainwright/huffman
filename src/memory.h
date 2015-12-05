@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utilities.h"
-
 typedef struct pointerList {
   void* pnt;
   struct pointerList* lastList;
@@ -16,14 +15,15 @@ typedef struct heapListStack {
    struct heapListStack* prev;
 } heapListStack_t;
 
-heapList_t* newHeapListNode(heapList_t* prev);
+
+void* reAllocate(void* ptr, int size);
 heapList_t** toHeapList(void* pnt);
 void newHeapList(void);
-heapList_t* getHeapList(void);
-heapList_t** getHeapListPtr(void);
 void freeHeapList(void);
 void* allocate(int size);
 void* callocate(int num, int size);
 void* callocOffList(int num, int size);
 void* allocOfflist(int size);
+void* reallocate(void* ptr, size_t size);
+
 #endif

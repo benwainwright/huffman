@@ -14,6 +14,10 @@
 
 #include "memory.h"
 
+heapList_t* getHeapList(void);
+heapList_t** getHeapListPtr(void);
+heapList_t* newHeapListNode(heapList_t* prev);
+
 heapList_t** toHeapList(void* pnt)
 {
    static heapList_t* current = NULL;
@@ -88,6 +92,16 @@ void freeHeapList(void)
    }
 }
 
+/* TODO consider how to implement this as part of the heaplist */
+void* reallocate(void* ptr, size_t size)
+{
+   void* newPtr = NULL;
+   if((newPtr = realloc(ptr, size)) == NULL) {
+      fprintf(stderr, "Memory allocation error (insert in array)");
+   }
+   return ptr;
+}
+
 void* allocate(int size)
 {
    void* returnVal = allocOfflist(size);
@@ -110,6 +124,16 @@ void* callocOffList(int num, int size)
       die("Failed to allocate memory");
    }
    return returnVal;
+}
+
+void* reAllocate(void* ptr, int size)
+{
+   void* returnVal = NULL;
+   if((returnVal = realloc(ptr, size)) == NULL) {
+      die("Failed to allocate memory");
+   }
+   return returnVal;
+
 }
 
 void* allocOfflist(int size)

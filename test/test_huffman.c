@@ -17,10 +17,8 @@ void testInsertSort(void)
    TEST_ASSERT_NOT_NULL(letters);
    TEST_ASSERT_EQUAL_INT('a', letters[0].letter);
    TEST_ASSERT_EQUAL_INT(4, letters[0].freq);
-
    TEST_ASSERT_EQUAL_INT('h', letters[1].letter);
    TEST_ASSERT_EQUAL_INT(8, letters[1].freq);
-
    TEST_ASSERT_EQUAL_INT('b', letters[2].letter);
    TEST_ASSERT_EQUAL_INT(14, letters[2].freq);
 }
@@ -91,8 +89,8 @@ void testCreateSubTreet(void)
    letter_t* parent = NULL;
    parent = createSubTree(letter1, letter2);
    TEST_ASSERT_NOT_NULL(parent);
-   TEST_ASSERT_EQUAL_PTR(letter1, parent->left);
-   TEST_ASSERT_EQUAL_PTR(letter2, parent->right);
+   TEST_ASSERT_EQUAL_INT(letter1->freq, parent->left->freq);
+   TEST_ASSERT_EQUAL_INT(letter2->freq, parent->right->freq);
    TEST_ASSERT_EQUAL_INT(11, parent->freq);
 }
 
@@ -113,4 +111,19 @@ void testDeleteFromArrayPos(void)
    TEST_ASSERT_EQUAL_INT(1, letterArray[1].freq);
    TEST_ASSERT_EQUAL_INT('h', letterArray[2].letter);
    TEST_ASSERT_EQUAL_INT(7, letterArray[2].freq);
+}
+
+void testMakeHuffTree(void)
+{
+   letter_t* tree = makeHuffTree("shortTest.txt");
+   TEST_ASSERT_EQUAL_INT(16, tree->freq);
+}
+
+void testOutputTree(void)
+{
+   letter_t* tree = NULL;
+   int* asciiGram = NULL;
+   makeFileAsciiGram("testFile1.txt", &asciiGram);
+   tree = makeHuffTree("testFile1.txt");
+   outputTree(tree, asciiGram);
 }

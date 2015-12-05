@@ -12,13 +12,19 @@ typedef struct letter {
    struct letter* right;
 } letter_t;
 
+
+
 int getCharFreq(char* string, char c);
 void insertSorted(letter_t** letters, int length, letter_t letter);
 void insertInArray(letter_t** array, letter_t item, int pos, int length);
-void insertSortNoZeros(int* asciiGram, letter_t** letters);
+int insertSortNoZeros(int* asciiGram, letter_t** letters);
 void deleteArrayPos(letter_t** array, int i, int length);
 letter_t* createSubTree(letter_t* left, letter_t* right);
-
-
+void makeFileAsciiGram(char* file, int** asciiGram);
+letter_t* allocNode(int freq, letter_t* left, letter_t* right, char c);
+void printLetterArray(letter_t* array, int length);
+letter_t* makeHuffTree(char* fileName);
+void outputTree(letter_t* tree, int* asciiGram);
+letter_t* printCode(letter_t* tree, char c);
 
 #endif
