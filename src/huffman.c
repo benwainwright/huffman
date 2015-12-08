@@ -99,17 +99,6 @@ int insertSortNoZeros(int* asciiGram, letter_t** letters)
    return arrayLength;
 }
 
-void insertSorted(letter_t** letters, int length, letter_t letter)
-{
-   int i;
-   for(i = 0; i < length; i++) {
-      if(*letters != NULL && letter.freq < (*letters)[i].freq) {
-         insertInArray(letters, letter, i, length);
-         return;
-      }
-   }
-   insertInArray(letters, letter, i, length);
-}
 
 void insertInArray(letter_t** array, letter_t item, int pos, int length)
 {

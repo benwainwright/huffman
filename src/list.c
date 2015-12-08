@@ -28,6 +28,7 @@ letter_t* initListNode(letter_t* prev, letter_t* next)
    return node;
 }
 
+
 letter_t* addListNode(letter_t* end)
 {
    letter_t* newNode = initListNode(end, NULL);
@@ -80,6 +81,10 @@ void reverseNexts(letter_t* end)
       next->next = end;
       next = next->next;
    }
+}
+
+void insertSorted(list_t* list, letter_t* letter)
+{
 }
 
 void reversePrevs(letter_t* start)

@@ -93,3 +93,60 @@ void testReverseList(void)
    TEST_ASSERT_NULL(list.start->prev);
    TEST_ASSERT_NULL(list.end->next);
 }
+
+void testInsertSortSortsList(void)
+{
+
+
+}
+
+
+
+void testInsertSortedInsertsInRightPlace(void)
+{
+   list_t list;
+   initList(&list);
+
+   letter_t firstLetter = {
+      .freq = 4,
+      .letter = 'a'
+   };
+
+   letter_t secondLetter = {
+      .freq = 2,
+      .letter = 'b'
+   };
+
+   letter_t thirdLetter = {
+      .freq = 7,
+      .letter = 'f'
+   };
+
+   letter_t fourthLetter = {
+      .freq = 1,
+      .letter = 'z'
+   };
+
+   insertSorted(&list, &firstLetter);
+   TEST_ASSERT_EQUAL_INT('a', list.end->letter);
+
+   insertSorted(&list, &secondLetter);
+   TEST_ASSERT_EQUAL_INT('b', list.start->letter);
+   TEST_ASSERT_EQUAL_INT('a', list.start->next->letter);
+
+   insertSorted(&list, &thirdLetter);
+   TEST_ASSERT_EQUAL_INT('a', list.end->letter);
+
+   insertSorted(&list, &thirdLetter);
+   TEST_ASSERT_EQUAL_INT('b', list.start->letter);
+   TEST_ASSERT_EQUAL_INT('a', list.start->next->letter);
+   TEST_ASSERT_EQUAL_INT('f', list.start->next->next->letter);
+   TEST_ASSERT_EQUAL_INT('f', list.end->letter);
+
+   insertSorted(&list, &fourthLetter);
+   TEST_ASSERT_EQUAL_INT('z', list.start->letter);
+   TEST_ASSERT_EQUAL_INT('b', list.start->next->letter);
+   TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
+   TEST_ASSERT_EQUAL_INT('f', list.start->next->next->next->letter);
+   TEST_ASSERT_EQUAL_INT('f', list.end->letter);
+}
