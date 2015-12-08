@@ -36,14 +36,14 @@ void testAddToWordList(void)
 {
    list_t list;
    initList(&list);
-   addWordToList(&list, 'a');
+   addToList(&list, 'a');
    TEST_ASSERT_NOT_NULL(list.end);
    TEST_ASSERT_EQUAL_INT('a', list.end->letter);
 
-   addWordToList(&list, 'c');
+   addToList(&list, 'c');
    TEST_ASSERT_EQUAL_INT('c', list.end->letter);
 
-   addWordToList(&list, 'b');
+   addToList(&list, 'b');
    TEST_ASSERT_EQUAL_INT('b', list.end->letter);
    TEST_ASSERT_EQUAL_INT('c', list.end->prev->letter);
 }
@@ -54,7 +54,7 @@ void testRemoveFromListRewiresListItems(void)
    letter_t* wordToRemove = list.start->next->next;
    letter_t* before = list.start->next;
    letter_t* after = list.start->next->next->next;
-   removeWordFromList(&list, wordToRemove);
+   removeFromList(&list, wordToRemove);
    TEST_ASSERT_EQUAL_PTR(before, after->prev);
    TEST_ASSERT_EQUAL_PTR(after, before->next);
    TEST_ASSERT_NULL(wordToRemove->next);
@@ -68,7 +68,7 @@ void testRemoveFromListRewiresStart(void)
    letter_t* wordToRemove = list.start;
    letter_t* after = list.start->next;
 
-   removeWordFromList(&list, wordToRemove);
+   removeFromList(&list, wordToRemove);
    TEST_ASSERT_EQUAL_PTR(after, list.start);
 }
 
@@ -77,7 +77,7 @@ void testRemoveFromListRewiresEnd(void)
    list_t list = dummyList();
    letter_t* wordToRemove = list.start->next->next->next->next->next->next->next;
    letter_t* before = list.start->next->next->next->next->next->next;
-   removeWordFromList(&list, wordToRemove);
+   removeFromList(&list, wordToRemove);
    TEST_ASSERT_EQUAL_PTR(before, list.end);
 }
 
@@ -85,11 +85,11 @@ void testReverseList(void)
 {
    list_t list = dummyList();
    reverseList(&list);
-   TEST_ASSERT_EQUAL_STRING("james", list.start->letter);
-   TEST_ASSERT_EQUAL_STRING("jimes", list.start->next->letter);
-   TEST_ASSERT_EQUAL_STRING("aames", list.start->next->next->letter);
-   TEST_ASSERT_EQUAL_STRING("james", list.start->next->prev->letter);
-   TEST_ASSERT_EQUAL_STRING("jimes", list.start->next->next->prev->letter);
+   TEST_ASSERT_EQUAL_INT('j', list.start->letter);
+   TEST_ASSERT_EQUAL_INT('i', list.start->next->letter);
+   TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
+   TEST_ASSERT_EQUAL_INT('j', list.start->next->prev->letter);
+   TEST_ASSERT_EQUAL_INT('i', list.start->next->next->prev->letter);
    TEST_ASSERT_NULL(list.start->prev);
    TEST_ASSERT_NULL(list.end->next);
 }

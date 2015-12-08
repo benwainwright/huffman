@@ -1,19 +1,28 @@
 #ifndef list_H
 #define list_H
 
-#include "types.h"
+#include "huffman.h"
 #include "utilities.h"
 #include "memory.h"
 #include <string.h>
 
+/* Defining as -2 to avoid confusion with EOF */
+#define EMPTY -2
+
+typedef struct nodeList {
+   letter_t* start;
+   letter_t* end;
+   int notTagged;
+} list_t;
+
 void initList(list_t* list);
-word_t* initListNode(word_t* prev, word_t* next);
-void addWordToList(list_t* list, char* word);
-word_t* addListNode(word_t* end);
+letter_t* initListNode(letter_t* prev, letter_t* next);
+void addToList(list_t* list, char letter);
+letter_t* addListNode(letter_t* end);
 void reverseList(list_t* list);
-void reverseNexts(word_t* end);
-void reversePrevs(word_t* start);
-void removeWordFromList(list_t* list, word_t* word);
+void reverseNexts(letter_t* end);
+void reversePrevs(letter_t* start);
+void removeFromList(list_t* list, letter_t* word);
 list_t duplicateList(list_t* list);
 void removeWordsNotLength(int length, list_t* list);
 

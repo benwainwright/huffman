@@ -12,38 +12,30 @@ list_t dummyList(void)
    letter_t* eight = (letter_t*)malloc(sizeof(letter_t));
    list_t list;
 
-   eight->word = "james";
+   eight->letter = 'j';
    eight->next = NULL;
-   eight->parent = NULL;
 
-   seven->word = "jimes";
+   seven->letter = 'i';
    seven->next = eight;
-   seven->parent = NULL;
 
-   six->word = "aames";
+   six->letter = 'a';
    six->next = seven;
-   six->parent = NULL;
 
-   five->word = "joen";
+   five->letter = 'o';
    five->next = six;
-   five->parent = NULL;
 
-   four->word = "johg";
+   four->letter = 'g';
    four->next = five;
-   four->parent = NULL;
 
-   three->word = "james";
+   three->letter = 'l';
    three->next = four;
-   three->parent = NULL;
 
-   two->word = "james";
+   two->letter = 's';
    two->next = three;
-   two->parent = NULL;
 
-   one->word = "joon";
+   one->letter = 'f';
    one->prev = NULL;
    one->next = two;
-   one->parent = NULL;
 
    eight->prev = seven;
    seven->prev = six;

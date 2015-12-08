@@ -6,8 +6,10 @@
 
 #include "memory.h"
 typedef struct letter {
-   char letter;
+   int letter;
    int freq;
+   struct letter* prev;
+   struct letter* next;
    struct letter* left;
    struct letter* right;
 } letter_t;

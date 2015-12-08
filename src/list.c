@@ -15,6 +15,7 @@ void initList(list_t* list)
    letter_t* node = initListNode(NULL, NULL);
    list->start = node;
    list->end = node;
+   list->start->letter = EMPTY;
 }
 
 letter_t* initListNode(letter_t* prev, letter_t* next)
@@ -34,12 +35,12 @@ letter_t* addListNode(letter_t* end)
    return newNode;
 }
 
-void addToList(list_t* list, char* word)
+void addToList(list_t* list, char letter)
 {
-   if(list->end->word != NULL) {
+   if(list->end->letter != EMPTY) {
       list->end = addListNode(list->end);
    }
-   list->end->word = word;
+   list->end->letter = letter;
 }
 
 void removeFromList(list_t* list, letter_t* word)
@@ -91,7 +92,7 @@ void reversePrevs(letter_t* start)
    }
 }
 
-letter_t duplicateList(list_t* list)
+list_t duplicateList(list_t* list)
 {
    list_t dupeList;
    letter_t* seek = NULL, *newNode = NULL;
@@ -99,7 +100,7 @@ letter_t duplicateList(list_t* list)
    seek = list->start;
    do {
       newNode = initListNode(newNode, NULL);
-      newNode->word = seek->word;
+      newNode->letter = seek->letter;
       if(newNode->prev == NULL) {
          dupeList.start = newNode;
       }
@@ -111,17 +112,4 @@ letter_t duplicateList(list_t* list)
    newNode->prev->next = newNode;
    dupeList.end = newNode;
    return dupeList;
-}
-
-void removeWordsNotLength(int length, list_t* list)
-{
-   letter_t* seek = list->start;
-   letter_t* next = NULL;
-   while(seek != NULL) {
-      next = seek->next;
-      if((int)strlen(seek->word) != length) {
-         removeWordFromList(list, seek);
-      }
-      seek = next;
-   }
 }
