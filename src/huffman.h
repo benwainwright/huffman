@@ -1,13 +1,14 @@
+#include <ctype.h>
+
 #ifndef huffman_H
 #define huffman_H
 #define NULLCHARLEN 1
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+
 #include "types.h"
-
 #include "list.h"
-
 #include "memory.h"
 
 int getCharFreq(char* string, char c);

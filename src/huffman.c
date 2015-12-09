@@ -53,8 +53,7 @@ void outputTree(letter_t* tree, letter_t* asciiGram)
 
 letter_t* makeHuffTree(char* fileName)
 {
-   letter_t* asciiGram = NULL, *parentNode = NULL, *left = NULL;
-   letter_t* right = NULL;
+   letter_t* asciiGram = NULL, *parent = NULL, *left = NULL, *right = NULL;
    list_t sortedList;
 
    makeFileAsciiGram(fileName, &asciiGram);
@@ -64,12 +63,12 @@ letter_t* makeHuffTree(char* fileName)
    while(sortedList.length > 1) {
       removeFromList(&sortedList, left = sortedList.start);
       removeFromList(&sortedList, right = sortedList.start);
-      parentNode = createSubTree(left, right);
+      parent = createSubTree(left, right);
       if(sortedList.length > 0) {
-         insertSorted(&sortedList, parentNode);
+         insertSorted(&sortedList, parent);
       }
    }
-   return parentNode;
+   return parent;
 }
 
 void makeFileAsciiGram(char* file, letter_t** asciiGram)

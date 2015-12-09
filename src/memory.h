@@ -25,5 +25,8 @@ void* callocate(int num, int size);
 void* callocOffList(int num, int size);
 void* allocOfflist(int size);
 void* reallocate(void* ptr, size_t size);
+heapList_t* getHeapList(void);
+heapList_t** getHeapListPtr(void);
+heapList_t* newHeapListNode(heapList_t* prev);
 
 #endif

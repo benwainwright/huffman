@@ -1,5 +1,5 @@
 /*
- * Word Ladders assignment
+ * Huffman assignment
  *
  * Functions in this file handle the initialisation and management
  * of the word list. Adapted and expanded from word ladder assignment
@@ -79,7 +79,6 @@ void addToList(list_t* list, char letter)
    }
    list->end->letter = letter;
    list->length++;
-
 }
 
 
