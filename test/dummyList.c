@@ -13,27 +13,35 @@ list_t dummyList(void)
    list_t list;
 
    eight->letter = 'j';
+   eight->freq = 19;
    eight->next = NULL;
 
    seven->letter = 'i';
+   seven->freq = 15;
    seven->next = eight;
 
    six->letter = 'a';
+   six->freq = 1;
    six->next = seven;
 
    five->letter = 'o';
+   five->freq = 2;
    five->next = six;
 
    four->letter = 'g';
+   four->freq = 2;
    four->next = five;
 
    three->letter = 'l';
+   three->freq = 10;
    three->next = four;
 
    two->letter = 's';
+   two->freq = 7;
    two->next = three;
 
    one->letter = 'f';
+   one->freq = 12;
    one->prev = NULL;
    one->next = two;
 

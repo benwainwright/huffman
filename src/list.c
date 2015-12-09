@@ -2,7 +2,7 @@
  * Word Ladders assignment
  *
  * Functions in this file handle the initialisation and management
- * of the word list. Adapted from word ladder assignment
+ * of the word list. Adapted and expanded from word ladder assignment
  *
  * Author: Ben Wainwright
  * Date: November 2015
@@ -83,6 +83,11 @@ void reverseNexts(letter_t* end)
    }
 }
 
+void insertionSort(list_t* list)
+{
+
+}
+
 void insertSorted(list_t* list, letter_t* letter)
 {
    letter_t* seek = list->start;
@@ -120,7 +125,6 @@ void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
       list->start = item;
    }
    else {
-
       beforeThis->prev->next = item;
    }
    beforeThis->prev = item;

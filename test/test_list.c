@@ -96,8 +96,12 @@ void testReverseList(void)
 
 void testInsertSortSortsList(void)
 {
-
-
+   list_t list = dummyList();
+   insertionSort(&list);
+   TEST_ASSERT_EQUAL_INT('a', list.start->letter);
+   TEST_ASSERT_EQUAL_INT('g', list.start->next->letter);
+   TEST_ASSERT_EQUAL_INT('o', list.start->next->letter);
+   TEST_ASSERT_EQUAL_INT('j', list.end->letter);
 }
 
 
