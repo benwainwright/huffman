@@ -31,7 +31,6 @@ code_t* initCode(int length, int freq)
 
 void outputTree(letter_t* tree, letter_t* asciiGram)
 {
-   letter_t* node = NULL;
    code_t* code;
    int c, freq, len, bitCount = 0;
    for(c = '\0'; c < '~'; c++) {
