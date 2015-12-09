@@ -100,8 +100,33 @@ void testInsertSortSortsList(void)
 
 }
 
+void testInsertBeforeInsertsInList(void)
+{
+   list_t list = dummyList();
+   letter_t insertLetter;
+   insertLetter.freq = 28;
+   insertLetter.letter = 'l';
+
+   insertBefore(list.start->next, &insertLetter, &list);
+   TEST_ASSERT_EQUAL_INT('l', list.start->next->letter);
+   TEST_ASSERT_EQUAL_INT('f', list.start->letter);
+   TEST_ASSERT_NOT_NULL(list.start->next->next);
+   TEST_ASSERT_EQUAL_INT('s', list.start->next->next->letter);
+}
 
 
+
+void testInsertBeforeInsertsStartOfListCorrectly(void)
+{
+   list_t list = dummyList();
+   letter_t insertLetter;
+   insertLetter.freq = 28;
+   insertLetter.letter = 'l';
+   insertBefore(list.start, &insertLetter, &list);
+   TEST_ASSERT_EQUAL_INT('l', list.start->letter);
+   TEST_ASSERT_NOT_NULL(list.start->next);
+   TEST_ASSERT_EQUAL_INT('f', list.start->next->letter); 
+}
 void testInsertSortedInsertsInRightPlace(void)
 {
    list_t list;

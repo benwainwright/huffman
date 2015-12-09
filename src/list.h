@@ -26,6 +26,7 @@ void removeFromList(list_t* list, letter_t* word);
 list_t duplicateList(list_t* list);
 void removeWordsNotLength(int length, list_t* list);
 void insertSorted(list_t* list, letter_t* letter);
+void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list);
 
 
 #endif

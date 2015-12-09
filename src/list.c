@@ -85,7 +85,29 @@ void reverseNexts(letter_t* end)
 
 void insertSorted(list_t* list, letter_t* letter)
 {
+   letter_t* seek = list->start;
+   while(seek != NULL) {
+      if (seek->freq < letter->freq ) {
+         /* insertBefore() */
+      }
+      seek = seek->next;
+   }
 }
+
+void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
+{
+   if(beforeThis->prev == NULL) {
+      list->start = item;
+   }
+   else {
+      beforeThis->prev->next = item;
+   }
+   beforeThis->prev = item;
+   item->next = beforeThis;
+
+
+}
+
 
 void reversePrevs(letter_t* start)
 {
