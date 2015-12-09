@@ -16,4 +16,10 @@ typedef struct nodeList {
    int notTagged;
    int length;
 } list_t;
+
+typedef struct code {
+   int length;
+   int freq;
+   char* bits;
+} code_t;
 #endif

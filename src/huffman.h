@@ -20,7 +20,7 @@ letter_t* allocNode(int freq, letter_t* left, letter_t* right, char c);
 void printLetterArray(letter_t* array, int length);
 letter_t* makeHuffTree(char* fileName);
 void outputTree(letter_t* tree, letter_t* asciiGram);
-letter_t* printCode(letter_t* tree, char c);
+code_t* getCode(letter_t* tree, char c, int i);
 void initAsciigram(letter_t* asciiGram);
 void printAsciiGram(letter_t* asciiGram, int length);
 void replaceOnlyItem(letter_t* item, list_t* list);

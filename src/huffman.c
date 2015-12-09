@@ -1,21 +1,25 @@
 #include "huffman.h"
 
-letter_t* printCode(letter_t* tree, char c)
+code_t* getCode(letter_t* tree, char c, int i)
 {
-   letter_t* node = NULL;
+   code_t* code = NULL;
    if(tree == NULL) {
       return NULL;
    }
    if(tree->letter == c) {
-      return tree;
+      code = (code_t*)allocate(sizeof(code_t));
+      code->bits = (char*)allocate(sizeof(char) * (i + 1));
+      code->bits[i] = '\0';
+      code->freq = tree->freq;
+      return code;
    }
-   if((node = printCode(tree->left, c)) != NULL) {
-      putchar('0');
-      return node;
+   if((code = getCode(tree->left, c, i + 1)) != NULL) {
+      code->bits[i] = '0';
+      return code;
    }
-   if((node = printCode(tree->right, c)) != NULL) {
-      putchar('1');
-      return node;
+   if((code = getCode(tree->right, c, i + 1)) != NULL) {
+      code->bits[i] = '1';
+      return code;
    }
    return NULL;
 }
@@ -23,14 +27,24 @@ letter_t* printCode(letter_t* tree, char c)
 void outputTree(letter_t* tree, letter_t* asciiGram)
 {
    letter_t* node = NULL;
-   int c;
+   code_t* code;
+   int c, freq, len, bitCount = 0;
    for(c = '\0'; c < '~'; c++) {
       if(asciiGram[c].freq > 0) {
-         printf("char '%c' = ", c);
-         node = printCode(tree, c);
-         printf("(%d)\n", node->freq);
+         code = getCode(tree, c, 0);
+         freq = code->freq;
+         len = strlen(code->bits);
+         if(isprint(c)) {
+            printf("'%c'", c);
+         }
+         else {
+            printf("%03d", (int) c);
+         }
+         printf(" : %24s ( %4d * %6d )\n", code->bits, len, freq);
+         bitCount += freq * len;
       }
    }
+   printf("%d bytes\n", bitCount / 8);
 }
 
 letter_t* makeHuffTree(char* fileName)
