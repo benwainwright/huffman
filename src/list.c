@@ -91,25 +91,14 @@ list_t insertionSort(list_t list)
    initList(&newList);
    while(seek != NULL)
    {
-      /* Need to duplicate, otherwise the insert rewires the next
+      /* Need to duplicate item, otherwise the insert rewires the next
          pointers which you are using to iterate the list */
       duplicateLetter(&insertLetter, seek);
       insertSorted(&newList, insertLetter);
-      printList(newList);
       seek = seek->next;
    }
 
    return newList;
-}
-
-void printList(list_t list)
-{
-   letter_t* seek = list.start;
-   int i = 0;
-   while(seek != NULL)
-   {
-      seek = seek->next;
-   }
 }
 
 void duplicateLetter(letter_t** dest, letter_t* source)
