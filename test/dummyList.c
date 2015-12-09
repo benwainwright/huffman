@@ -25,7 +25,7 @@ list_t dummyList(void)
    six->next = seven;
 
    five->letter = 'o';
-   five->freq = 2;
+   five->freq = 3;
    five->next = six;
 
    four->letter = 'g';

@@ -83,9 +83,40 @@ void reverseNexts(letter_t* end)
    }
 }
 
-void insertionSort(list_t* list)
+list_t insertionSort(list_t list)
 {
+   list_t newList;
+   letter_t* seek = list.start;
+   letter_t* insertLetter = NULL;
+   initList(&newList);
+   while(seek != NULL)
+   {
+      /* Need to duplicate, otherwise the insert rewires the next
+         pointers which you are using to iterate the list */
+      duplicateLetter(&insertLetter, seek);
+      insertSorted(&newList, insertLetter);
+      printList(newList);
+      seek = seek->next;
+   }
 
+   return newList;
+}
+
+void printList(list_t list)
+{
+   letter_t* seek = list.start;
+   int i = 0;
+   while(seek != NULL)
+   {
+      seek = seek->next;
+   }
+}
+
+void duplicateLetter(letter_t** dest, letter_t* source)
+{
+   *dest = initListNode(source->prev, source->next);
+   (*dest)->freq = source->freq;
+   (*dest)->letter = source->letter;
 }
 
 void insertSorted(list_t* list, letter_t* letter)
@@ -123,6 +154,7 @@ void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
 {
    if(beforeThis->prev == NULL) {
       list->start = item;
+      item->prev = NULL;
    }
    else {
       beforeThis->prev->next = item;

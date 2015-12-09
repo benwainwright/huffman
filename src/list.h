@@ -29,7 +29,9 @@ void insertSorted(list_t* list, letter_t* letter);
 void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list);
 void insertAtEnd(letter_t* item, list_t* list);
 int listIsEmpty(list_t* list);
-void insertionSort(list_t* list);
+list_t insertionSort(list_t list);
+void duplicateLetter(letter_t** dest, letter_t* source);
+void printList(list_t list);
 
 
 #endif
