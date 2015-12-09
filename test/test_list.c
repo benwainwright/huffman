@@ -100,6 +100,7 @@ void testInsertSortSortsList(void)
 
 }
 
+
 void testInsertBeforeInsertsInList(void)
 {
    list_t list = dummyList();
@@ -125,8 +126,36 @@ void testInsertBeforeInsertsStartOfListCorrectly(void)
    insertBefore(list.start, &insertLetter, &list);
    TEST_ASSERT_EQUAL_INT('l', list.start->letter);
    TEST_ASSERT_NOT_NULL(list.start->next);
-   TEST_ASSERT_EQUAL_INT('f', list.start->next->letter); 
+   TEST_ASSERT_EQUAL_INT('f', list.start->next->letter);
 }
+
+
+testInsertAtEndPutsItemAtEndOfList(void)
+{
+   list_t list = dummyList();
+   letter_t insertLetter;
+   insertLetter.freq = 28;
+   insertLetter.letter = 'r';
+   insertAtEnd(&insertLetter, &list);
+   TEST_ASSERT_NOT_NULL(list.end);
+   TEST_ASSERT_EQUAL_INT('r', list.end->letter);
+   TEST_ASSERT_EQUAL_INT('r', list.start->next->next->next->next->next->next->next->next);
+}
+
+void testInsertAtEndPutsItemInEmptyListCorrectly(void)
+{
+   list_t list;
+   initList(&list);
+   letter_t insertLetter;
+   insertLetter.freq = 28;
+   insertLetter.letter = 'r';
+   insertAtEnd(&insertLetter, &list);
+   TEST_ASSERT_EQUAL_INT('r', list.end->letter);
+   TEST_ASSERT_EQUAL_INT('r', list.start->letter);
+   TEST_ASSERT_EQUAL_PTR(list.start, list.end);
+}
+
+
 void testInsertSortedInsertsInRightPlace(void)
 {
    list_t list;
@@ -154,24 +183,19 @@ void testInsertSortedInsertsInRightPlace(void)
 
    insertSorted(&list, &firstLetter);
    TEST_ASSERT_EQUAL_INT('a', list.end->letter);
-
    insertSorted(&list, &secondLetter);
    TEST_ASSERT_EQUAL_INT('b', list.start->letter);
    TEST_ASSERT_EQUAL_INT('a', list.start->next->letter);
-
    insertSorted(&list, &thirdLetter);
-   TEST_ASSERT_EQUAL_INT('a', list.end->letter);
-
-   insertSorted(&list, &thirdLetter);
-   TEST_ASSERT_EQUAL_INT('b', list.start->letter);
-   TEST_ASSERT_EQUAL_INT('a', list.start->next->letter);
-   TEST_ASSERT_EQUAL_INT('f', list.start->next->next->letter);
    TEST_ASSERT_EQUAL_INT('f', list.end->letter);
-
    insertSorted(&list, &fourthLetter);
+   TEST_ASSERT_EQUAL_INT('z', list.start->letter);
+   TEST_ASSERT_NOT_NULL(list.start);
+   TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
    TEST_ASSERT_EQUAL_INT('z', list.start->letter);
    TEST_ASSERT_EQUAL_INT('b', list.start->next->letter);
    TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
-   TEST_ASSERT_EQUAL_INT('f', list.start->next->next->next->letter);
+   TEST_ASSERT_NOT_NULL(list.start->next->next->next);
    TEST_ASSERT_EQUAL_INT('f', list.end->letter);
+   TEST_ASSERT_EQUAL_INT('f', list.start->next->next->next->letter);
 }
