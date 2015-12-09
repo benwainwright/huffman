@@ -4,6 +4,8 @@
 #include "memory.h"
 #include "dummyList.h"
 
+int listLength(list_t list);
+letter_t* copyLLIntoArray(list_t list);
 
 void testInitWordList(void)
 {
@@ -97,7 +99,12 @@ void testReverseList(void)
 void testInsertSortSortsList(void)
 {
    list_t list = dummyList();
-   list_t newList = insertionSort(list);
+   int length = listLength(list);
+   letter_t* array = copyLLIntoArray(list);
+
+   list_t newList = insertionSort(array, length);
+   TEST_ASSERT_NOT_NULL(newList.start);
+   TEST_ASSERT_NOT_NULL(newList.end);
    TEST_ASSERT_EQUAL_INT('a', newList.start->letter);
    TEST_ASSERT_EQUAL_INT('g', newList.start->next->letter);
    TEST_ASSERT_EQUAL_INT('o', newList.start->next->next->letter);
@@ -117,6 +124,30 @@ void testInsertBeforeInsertsInList(void)
    TEST_ASSERT_EQUAL_INT('f', list.start->letter);
    TEST_ASSERT_NOT_NULL(list.start->next->next);
    TEST_ASSERT_EQUAL_INT('s', list.start->next->next->letter);
+}
+
+int listLength(list_t list)
+{
+   int i;
+   letter_t* seek = list.start;
+   while(seek != NULL) {
+      i++;
+      seek = seek->next;
+   }
+   return i;
+}
+
+letter_t* copyLLIntoArray(list_t list)
+{
+   int i;
+   int length = listLength(list);
+   letter_t* array = (letter_t*)malloc(sizeof(letter_t) * length);
+   letter_t* seek = list.start;
+   for(i = 0; i < length; i++) {
+      array[i] = *seek;
+      seek = seek->next;
+   }
+   return array;
 }
 
 

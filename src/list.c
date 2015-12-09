@@ -83,22 +83,18 @@ void reverseNexts(letter_t* end)
    }
 }
 
-list_t insertionSort(list_t list)
+list_t insertionSort(letter_t* array, int length)
 {
+
+   int i;
    list_t newList;
-   letter_t* seek = list.start;
    letter_t* insertLetter = NULL;
    initList(&newList);
-   while(seek != NULL)
-   {
-      /* Need to duplicate item, otherwise the insert rewires the next
-         pointers which you are using to iterate the list */
-      duplicateLetter(&insertLetter, seek);
-      insertSorted(&newList, insertLetter);
-      seek = seek->next;
+   for(i = 0; i < length; i++) {
+      insertSorted(&newList, &array[i]);
    }
-
    return newList;
+
 }
 
 void duplicateLetter(letter_t** dest, letter_t* source)

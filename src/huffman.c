@@ -56,7 +56,7 @@ void makeFileAsciiGram(char* file, int** asciiGram)
    FILE* fh = openFile(file, "r");
    *asciiGram = (int*)callocate(256, sizeof(int));
    do {
-      if((c = getc(fh)) != EOF && c < 256) {
+      if((c = getc(fh)) != EOF && c < ASCIILETTERS) {
          (*asciiGram)[c]++;
       }
    } while(!feof(fh) && !ferror(fh));

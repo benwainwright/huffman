@@ -1,5 +1,6 @@
 #ifndef huffman_H
 #define huffman_H
+#define ASCIILETTERS 128
 
 #include <stdlib.h>
 #include <stdio.h>
