@@ -55,6 +55,7 @@ list_t dummyList(void)
 
    list.start = one;
    list.end = eight;
+   list.length = 8;
 
    return list;
 }

@@ -34,6 +34,30 @@ void testDuplicateList(void)
    }
 }
 
+void testInsertBeforeEndOfList(void)
+{
+   list_t list = dummyList();
+   letter_t* seek = list.start;
+   letter_t* oldstart = list.start;
+   letter_t insertLetter;
+   insertLetter.letter = 'l';
+   while(seek != NULL)
+   {
+      if(seek->next == NULL) {
+         insertBefore(seek, &insertLetter, &list);
+      }
+      seek = seek->next;
+   }
+   TEST_ASSERT_NOT_NULL(list.end->prev);
+   TEST_ASSERT_NOT_NULL(list.end->prev->prev);
+   TEST_ASSERT_NOT_NULL(list.end->prev->prev->prev);
+   TEST_ASSERT_EQUAL_INT('l', list.end->prev->letter);
+   TEST_ASSERT_EQUAL_PTR(oldstart, list.start);
+   TEST_ASSERT_NOT_NULL(list.start->next);
+   TEST_ASSERT_NOT_NULL(list.start->next->next);
+
+}
+
 void testAddToWordList(void)
 {
    list_t list;
@@ -128,7 +152,7 @@ void testInsertBeforeInsertsInList(void)
 
 int listLength(list_t list)
 {
-   int i;
+   int i = 0;
    letter_t* seek = list.start;
    while(seek != NULL) {
       i++;
@@ -164,6 +188,29 @@ void testInsertBeforeInsertsStartOfListCorrectly(void)
    TEST_ASSERT_EQUAL_INT('f', list.start->next->letter);
 }
 
+
+void testListLengthWorksProperly(void)
+{
+   list_t list;
+   initList(&list);
+   letter_t i1, i2, i3, i4, i5, i6, i7;
+   TEST_ASSERT_EQUAL_INT(0, list.length);
+
+   insertBefore(list.start, &i1, &list);
+   TEST_ASSERT_EQUAL_INT(1, list.length);
+
+   i2.freq = i3.freq = i4.freq = 0;
+   i5.freq = i6.freq = i7.freq = 1;
+
+   addToList(&list, 'l');
+   addToList(&list, 'n');
+   addToList(&list, 'f');
+   TEST_ASSERT_EQUAL_INT(4, list.length);
+
+   reverseList(&list);
+   TEST_ASSERT_EQUAL_INT(4, list.length);
+
+}
 
 testInsertAtEndPutsItemAtEndOfList(void)
 {
@@ -217,13 +264,17 @@ void testInsertSortedInsertsInRightPlace(void)
    };
 
    insertSorted(&list, &firstLetter);
+
    TEST_ASSERT_EQUAL_INT('a', list.end->letter);
    insertSorted(&list, &secondLetter);
+
    TEST_ASSERT_EQUAL_INT('b', list.start->letter);
    TEST_ASSERT_EQUAL_INT('a', list.start->next->letter);
    insertSorted(&list, &thirdLetter);
+
    TEST_ASSERT_EQUAL_INT('f', list.end->letter);
    insertSorted(&list, &fourthLetter);
+
    TEST_ASSERT_EQUAL_INT('z', list.start->letter);
    TEST_ASSERT_NOT_NULL(list.start);
    TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
@@ -231,6 +282,7 @@ void testInsertSortedInsertsInRightPlace(void)
    TEST_ASSERT_EQUAL_INT('b', list.start->next->letter);
    TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
    TEST_ASSERT_NOT_NULL(list.start->next->next->next);
+
    TEST_ASSERT_EQUAL_INT('f', list.end->letter);
    TEST_ASSERT_EQUAL_INT('f', list.start->next->next->next->letter);
 }

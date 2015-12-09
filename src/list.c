@@ -16,6 +16,8 @@ void initList(list_t* list)
    list->start = node;
    list->end = node;
    list->start->letter = EMPTY;
+   list->start->freq = 0;
+   list->length = 0;
 }
 
 letter_t* initListNode(letter_t* prev, letter_t* next)
@@ -27,6 +29,40 @@ letter_t* initListNode(letter_t* prev, letter_t* next)
    node->right = NULL;
    return node;
 }
+
+void deleteZerosFromList(list_t* list)
+{
+   letter_t* seek = list->start;
+   letter_t* next = NULL;
+   while(seek != NULL)
+   {
+      next = seek->next;
+      if(seek->freq == 0) {
+         removeFromList(list, seek);
+      }
+      seek = next;
+   }
+}
+
+void removeFromList(list_t* list, letter_t* letter)
+{
+   if(letter->next != NULL) {
+      letter->next->prev = letter->prev;
+   }
+   else {
+      list->end = letter->prev;
+   }
+   if(letter->prev != NULL) {
+      letter->prev->next = letter->next;
+   }
+   else {
+      list->start = letter->next;
+   }
+   letter->next = NULL;
+   letter->prev = NULL;
+   list->length--;
+}
+
 
 
 letter_t* addListNode(letter_t* end)
@@ -42,24 +78,8 @@ void addToList(list_t* list, char letter)
       list->end = addListNode(list->end);
    }
    list->end->letter = letter;
-}
+   list->length++;
 
-void removeFromList(list_t* list, letter_t* word)
-{
-   if(word->next != NULL) {
-      word->next->prev = word->prev;
-   }
-   else {
-      list->end = word->prev;
-   }
-   if(word->prev != NULL) {
-      word->prev->next = word->next;
-   }
-   else {
-      list->start = word->next;
-   }
-   word->next = NULL;
-   word->prev = NULL;
 }
 
 
@@ -83,15 +103,15 @@ void reverseNexts(letter_t* end)
    }
 }
 
-list_t insertionSort(letter_t* array, int length)
+list_t insertionSort(letter_t* asciiGram, int length)
 {
 
    int i;
    list_t newList;
-   letter_t* insertLetter = NULL;
    initList(&newList);
+
    for(i = 0; i < length; i++) {
-      insertSorted(&newList, &array[i]);
+      insertSorted(&newList, &asciiGram[i]);
    }
    return newList;
 
@@ -106,6 +126,7 @@ void duplicateLetter(letter_t** dest, letter_t* source)
 
 void insertSorted(list_t* list, letter_t* letter)
 {
+   int i = 0;
    letter_t* seek = list->start;
    while(seek != NULL) {
       if (letter->freq < seek->freq) {
@@ -116,37 +137,70 @@ void insertSorted(list_t* list, letter_t* letter)
    }
    insertAtEnd(letter, list);
 }
+void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
+{
+   if(listIsEmpty(list)) {
+      replaceOnlyItem(item, list);
+   }
+   else {
+      if(beforeThis->prev == NULL) {
+            list->start = item;
+      }
+      else {
+         beforeThis->prev->next = item;
+      }
+      item->next = beforeThis;
+      item->prev = beforeThis->prev;
+      beforeThis->prev = item;
+   }
+   list->length++;
+}
 
+
+void replaceOnlyItem(letter_t* item, list_t* list)
+{
+   list->start = item;
+   list->end = item;
+   item->prev = NULL;
+   item->next = NULL;
+
+}
 void insertAtEnd(letter_t* item, list_t* list)
 {
    if(listIsEmpty(list)) {
-      list->start = item;
-      item->prev = NULL;
-      item->next = NULL;
+      replaceOnlyItem(item, list);
    } else {
+      item->next = NULL;
       item->prev = list->end;
+      list->end->next = item;
+      list->end = item;
    }
-   list->end->next = item;
-   list->end = item;
+   list->length++;
 }
 
+
+void printList(list_t list)
+{
+   letter_t* seek = list.start;
+   int character = 0;
+
+   while(seek != NULL)
+   {
+      if (isprint(seek->letter)) {
+         character = seek->letter;
+      }
+      else {
+         character = 'x';
+      }
+      printf("%c(%d) ", character, seek->freq);
+      seek = seek->next;
+   }
+}
 int listIsEmpty(list_t* list)
 {
    return (list->end == list->start && list->start->letter == EMPTY);
 }
 
-void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
-{
-   if(beforeThis->prev == NULL) {
-      list->start = item;
-      item->prev = NULL;
-   }
-   else {
-      beforeThis->prev->next = item;
-   }
-   beforeThis->prev = item;
-   item->next = beforeThis;
-}
 
 
 void reversePrevs(letter_t* start)
@@ -178,5 +232,6 @@ list_t duplicateList(list_t* list)
    } while(seek != NULL);
    newNode->prev->next = newNode;
    dupeList.end = newNode;
+   dupeList.length = list->length;
    return dupeList;
 }

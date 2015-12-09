@@ -20,12 +20,12 @@ letter_t* printCode(letter_t* tree, char c)
    return NULL;
 }
 
-void outputTree(letter_t* tree, int* asciiGram)
+void outputTree(letter_t* tree, letter_t* asciiGram)
 {
    letter_t* node = NULL;
    int c;
    for(c = '\0'; c < '~'; c++) {
-      if(asciiGram[c] > 0) {
+      if(asciiGram[c].freq > 0) {
          printf("char '%c' = ", c);
          node = printCode(tree, c);
          printf("(%d)\n", node->freq);
@@ -35,32 +35,57 @@ void outputTree(letter_t* tree, int* asciiGram)
 
 letter_t* makeHuffTree(char* fileName)
 {
-   int length = 0;
-   int* asciiGram = NULL;
-   letter_t* letters = NULL;
-   letter_t* parentNode = NULL;
+   letter_t* asciiGram = NULL, *parentNode = NULL, *left = NULL;
+   letter_t* right = NULL;
+   list_t sortedList;
+
    makeFileAsciiGram(fileName, &asciiGram);
-   length = insertSortNoZeros(asciiGram, &letters);
-   while(length > 1) {
-      parentNode = createSubTree(letters, letters + 1);
-      deleteArrayPos(&letters, 0, length--);
-      deleteArrayPos(&letters, 0, length--);
-      insertSorted(&letters, length++, *parentNode);
+   sortedList = insertionSort(asciiGram, ASCIILETTERS);
+   deleteZerosFromList(&sortedList);
+
+   while(sortedList.length > 1) {
+      removeFromList(&sortedList, left = sortedList.start);
+      removeFromList(&sortedList, right = sortedList.start);
+      parentNode = createSubTree(left, right);
+      if(sortedList.length > 0) {
+         insertSorted(&sortedList, parentNode);
+      }
    }
-   return letters;
+   return parentNode;
 }
 
-void makeFileAsciiGram(char* file, int** asciiGram)
+void makeFileAsciiGram(char* file, letter_t** asciiGram)
 {
    int c;
    FILE* fh = openFile(file, "r");
-   *asciiGram = (int*)callocate(256, sizeof(int));
+   *asciiGram = (letter_t*)callocate(ASCIILETTERS, sizeof(letter_t));
+   initAsciigram(*asciiGram);
    do {
       if((c = getc(fh)) != EOF && c < ASCIILETTERS) {
-         (*asciiGram)[c]++;
+         (*asciiGram)[c].freq++;
       }
    } while(!feof(fh) && !ferror(fh));
    fclose(fh);
+}
+
+void initAsciigram(letter_t* asciiGram)
+{
+   int i;
+   for(i = 0; i < ASCIILETTERS; i++) {
+      asciiGram[i].prev = NULL;
+      asciiGram[i].next = NULL;
+      asciiGram[i].freq = 0;
+      asciiGram[i].letter = i;
+   }
+}
+
+void printAsciiGram(letter_t* asciiGram, int length)
+{
+   int i;
+   for(i = 0; i < length; i++) {
+      printf("%d, Letter %c, freq %d\n", i, asciiGram[i].letter, asciiGram[i].freq);
+   }
+
 }
 
 letter_t* createSubTree(letter_t* left, letter_t* right)
@@ -81,43 +106,4 @@ letter_t* allocNode(int freq, letter_t* left, letter_t* right, char c)
    returnVal->right = right;
    returnVal->letter = c;
    return returnVal;
-}
-
-int insertSortNoZeros(int* asciiGram, letter_t** letters)
-{
-   int i, arrayLength = 0;
-   letter_t letter;
-   letter.left = NULL;
-   letter.right = NULL;
-   for(i = 0; i < 256; i++) {
-      if(asciiGram[i] > 0) {
-         letter.freq = asciiGram[i];
-         letter.letter = (char) i;
-         insertSorted(letters, arrayLength++, letter);
-      }
-   }
-   return arrayLength;
-}
-
-
-void insertInArray(letter_t** array, letter_t item, int pos, int length)
-{
-   int i;
-   *array = (letter_t*)reAllocate(*array, sizeof(letter_t) * (length + 1));
-
-   for(i = length; i > pos && i > 0; i--) {
-      (*array)[i] = (*array)[i - 1];
-   }
-   (*array)[i] = item;
-}
-
-void deleteArrayPos(letter_t** array, int pos, int length)
-{
-   int i;
-   for(i = pos; i < length - 1; i++) {
-      (*array)[i] = (*array)[i + 1];
-   }
-   if(length > 1) {
-      *array = (letter_t*)reAllocate(*array, sizeof(letter_t) * (length -1));
-   }
 }
