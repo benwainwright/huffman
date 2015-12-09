@@ -1,6 +1,6 @@
 #ifndef huffman_H
 #define huffman_H
-
+#define NULLCHARLEN 1
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -21,6 +21,7 @@ void printLetterArray(letter_t* array, int length);
 letter_t* makeHuffTree(char* fileName);
 void outputTree(letter_t* tree, letter_t* asciiGram);
 code_t* getCode(letter_t* tree, char c, int i);
+code_t* initCode(int length, int freq);
 void initAsciigram(letter_t* asciiGram);
 void printAsciiGram(letter_t* asciiGram, int length);
 void replaceOnlyItem(letter_t* item, list_t* list);

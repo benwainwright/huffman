@@ -7,11 +7,7 @@ code_t* getCode(letter_t* tree, char c, int i)
       return NULL;
    }
    if(tree->letter == c) {
-      code = (code_t*)allocate(sizeof(code_t));
-      code->bits = (char*)allocate(sizeof(char) * (i + 1));
-      code->bits[i] = '\0';
-      code->freq = tree->freq;
-      return code;
+      return initCode(i, tree->freq);
    }
    if((code = getCode(tree->left, c, i + 1)) != NULL) {
       code->bits[i] = '0';
@@ -22,6 +18,15 @@ code_t* getCode(letter_t* tree, char c, int i)
       return code;
    }
    return NULL;
+}
+
+code_t* initCode(int length, int freq)
+{
+   code_t* code = (code_t*)allocate(sizeof(code_t));
+   code->bits = (char*)allocate(sizeof(char) * (length + NULLCHARLEN));
+   code->bits[length] = '\0';
+   code->freq = freq;
+   return code;
 }
 
 void outputTree(letter_t* tree, letter_t* asciiGram)
