@@ -60,7 +60,6 @@
             -Wextra
             -std=c89
             -pedantic
-            -g
 
 
    :release:
@@ -78,6 +77,7 @@
          - -D$: COLLECTION_DEFINES_TEST_AND_VENDOR
          - -c ${1}
          - -o ${2}
+         - -g
          - ${4}
 
    :release_compiler:
