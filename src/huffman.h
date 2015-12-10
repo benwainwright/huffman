@@ -27,6 +27,6 @@ void initAsciigram(letter_t* asciiGram);
 void printAsciiGram(letter_t* asciiGram, int length);
 void replaceOnlyItem(letter_t* item, list_t* list);
 int numOfRights(letter_t* tree);
-int leftDepth(letter_t* tree);
+int leftDepth(letter_t* tree, int depth);
 
 #endif

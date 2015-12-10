@@ -23,4 +23,5 @@ letter_t* dummyTree(void)
    root->right->right = (letter_t*)malloc(sizeof(letter_t));
    root->right->right->left = NULL;
    root->right->right->right = NULL;
+   return root;
 }
