@@ -3,6 +3,7 @@
 #include "memory.h"
 #include "utilities.h"
 #include "list.h"
+#include "dummyTree.c"
 
 void testBuildAsciiGramCreatesCorrectCounts(void)
 {
@@ -48,4 +49,27 @@ void testOutputTree(void)
    makeFileAsciiGram("testFile1.txt", &asciiGram);
    tree = makeHuffTree("testFile1.txt");
    outputTree(tree, asciiGram);
+}
+
+void testNumOfRightsReturnsCorrectNum(void)
+{
+   letter_t* tree = dummyTree();
+   TEST_ASSERT_EQUAL_INT(3, numOfRights(tree));
+}
+
+void testNumOfRightsReturnsZeroWhenGivenNull(void)
+{
+   TEST_ASSERT_EQUAL_INT(0, numOfRights(NULL));
+}
+
+void testLeftDepthReturnsCorrectNum(void)
+{
+   letter_t* tree = dummyTree();
+   TEST_ASSERT_EQUAL_INT(4, leftDepth(tree));
+
+}
+
+void testLeftDepthReturnsZeroWhenGivenNull(void)
+{
+   TEST_ASSERT_EQUAL_INT(0, leftDepth(NULL));
 }

@@ -14,9 +14,6 @@
 
 #include "memory.h"
 
-heapList_t* getHeapList(void);
-heapList_t** getHeapListPtr(void);
-heapList_t* newHeapListNode(heapList_t* prev);
 
 heapList_t** toHeapList(void* pnt)
 {
