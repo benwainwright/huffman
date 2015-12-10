@@ -125,11 +125,22 @@ letter_t* allocNode(int freq, letter_t* left, letter_t* right, char c)
    return returnVal;
 }
 
-int numOfRights(letter_t* tree, int num)
+int numOfRights(letter_t* tree)
 {
+   int fromLeft = 0, fromRight = 0;
    if (tree == NULL) {
       return 0;
    }
+
+   if (tree->left != NULL) {
+      fromLeft = numOfRights(tree->left);
+   }
+
+   if (tree->right != NULL) {
+      fromRight = numOfRights(tree->right) + 1;
+   }
+
+   return fromLeft + fromRight;
 }
 
 int leftDepth(letter_t* tree)

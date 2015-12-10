@@ -54,12 +54,16 @@ void testOutputTree(void)
 void testNumOfRightsReturnsCorrectNum(void)
 {
    letter_t* tree = dummyTree();
-   TEST_ASSERT_EQUAL_INT(3, numOfRights(tree, 0));
+   letter_t* tree2 = dummyTree2();
+
+   TEST_ASSERT_EQUAL_INT(3, numOfRights(tree));
+   TEST_ASSERT_EQUAL_INT(4, numOfRights(tree2));
+
 }
 
 void testNumOfRightsReturnsZeroWhenGivenNull(void)
 {
-   TEST_ASSERT_EQUAL_INT(0, numOfRights(NULL, 0));
+   TEST_ASSERT_EQUAL_INT(0, numOfRights(NULL));
 }
 
 void testLeftDepthReturnsCorrectNum(void)
