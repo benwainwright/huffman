@@ -130,8 +130,6 @@ int numOfRights(letter_t* tree, int num)
    if (tree == NULL) {
       return 0;
    }
-
-
 }
 
 int leftDepth(letter_t* tree)

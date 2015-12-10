@@ -65,7 +65,10 @@ void testNumOfRightsReturnsZeroWhenGivenNull(void)
 void testLeftDepthReturnsCorrectNum(void)
 {
    letter_t* tree = dummyTree();
+   letter_t* tree2 = dummyTree2();
    TEST_ASSERT_EQUAL_INT(5, leftDepth(tree));
+   TEST_ASSERT_EQUAL_INT(4, leftDepth(tree2));
+
 
 }
 
