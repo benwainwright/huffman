@@ -10,12 +10,11 @@ void testBuildAsciiGramCreatesCorrectCounts(void)
    letter_t* asciiGram = NULL;
    makeFileAsciiGram("testFile1.txt", &asciiGram);
    TEST_ASSERT_NOT_NULL(asciiGram);
-   TEST_ASSERT_EQUAL_INT(7, asciiGram['t'].freq);
-   TEST_ASSERT_EQUAL_INT(8, asciiGram['i'].freq);
-   TEST_ASSERT_EQUAL_INT(3, asciiGram['\n'].freq);
-   TEST_ASSERT_EQUAL_INT(6, asciiGram['a'].freq);
-   TEST_ASSERT_EQUAL_INT(14, asciiGram[' '].freq);
-   TEST_ASSERT_EQUAL_INT(1, asciiGram['.'].freq);
+   TEST_ASSERT_EQUAL_INT(7, asciiGram['T'].freq);
+   TEST_ASSERT_EQUAL_INT(8, asciiGram['I'].freq);
+   TEST_ASSERT_EQUAL_INT(6, asciiGram['A'].freq);
+   TEST_ASSERT_EQUAL_INT(0, asciiGram[' '].freq);
+   TEST_ASSERT_EQUAL_INT(0, asciiGram['.'].freq);
 }
 
 void testCreateSubTreet(void)
@@ -38,7 +37,7 @@ void testMakeHuffTree(void)
 {
    letter_t* tree = makeHuffTree("shortTest.txt");
    TEST_ASSERT_NOT_NULL(tree);
-   TEST_ASSERT_EQUAL_INT(16, tree->freq);
+   TEST_ASSERT_EQUAL_INT(12, tree->freq);
 }
 
 

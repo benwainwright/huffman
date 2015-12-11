@@ -11,6 +11,7 @@ SDL_Window* initSDLWindow(char* title, position_t pos, dimension_t dim)
    if((win = SDL_CreateWindow(title, pos.x, pos.y, dim.w, dim.h, 0)) == NULL) {
       sdlDie("Window Creation");
    }
+
    return win;
 }
 

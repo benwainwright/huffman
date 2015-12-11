@@ -43,4 +43,10 @@ typedef struct code {
    int freq;
    char* bits;
 } code_t;
+
+typedef struct queue {
+   letter_t* front;
+   letter_t* back;
+} queue_t;
+
 #endif
