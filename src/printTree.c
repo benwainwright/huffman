@@ -50,3 +50,14 @@ void create2Darray(char*** array, int h, int w)
    }
    *array = local;
 }
+
+void print2DArray(char** array, int h, int w)
+{
+   int y, x;
+   for(y = 0; y < h; y++) {
+      for(x = 0; x < w; x++) {
+         putchar(array[y][x]);
+      }
+      putchar('\n');
+   }
+}

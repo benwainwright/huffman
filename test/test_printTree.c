@@ -44,3 +44,14 @@ void testCreate2DarrayDoesntSetsAPointer(void)
    array[3][2] = 'a';
    TEST_ASSERT_EQUAL_INT('a', array[3][2]);
 }
+
+void testPrint2DArray(void)
+{
+   char** array = NULL;
+   create2Darray(&array , 4, 4);
+   array[0][0] = 'a';
+   array[0][1] = 'b';
+   array[2][1] = 'c';
+   array[2][2] = 'd';
+   print2DArray(array, 4, 4);
+}
