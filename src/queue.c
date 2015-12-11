@@ -6,11 +6,13 @@
 
 #include "queue.h"
 
-void initQueue(queue_t* queue)
+void initQueue(queue_t** queue)
 {
-   queue->front = NULL;
-   queue->back = NULL;
-   queue->length = 0;
+   queue_t* thisQueue = (queue_t*)allocate(sizeof(queue_t));
+   thisQueue->front = NULL;
+   thisQueue->back = NULL;
+   thisQueue->length = 0;
+   *queue = thisQueue;
 }
 
 
@@ -26,7 +28,7 @@ void addToQueue(queue_t* queue, letter_t* word)
       queue->front = word;
    }
 
-   /* TODO test for intiger overflow */
+   /* TODO test for integer overflow */
    queue->length++;
 }
 
