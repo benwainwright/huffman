@@ -1,6 +1,22 @@
 #ifndef types_H
 #define types_H
 
+typedef struct position {
+   int y;
+   int x;
+} position_t;
+
+typedef struct dimensions {
+   int h;
+   int w;
+} dimension_t;
+
+typedef struct colourRGB {
+   int r;
+   int g;
+   int b;
+} rgb_t;
+
 typedef enum returnCodes {
    SUCCESS,
    USAGE_ERROR
