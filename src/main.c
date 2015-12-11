@@ -5,9 +5,10 @@ int main(int argc, char* argv[])
    if(argc == 2) {
       letter_t* tree = NULL;
       letter_t* asciiGram = NULL;
+
       makeFileAsciiGram(argv[1], &asciiGram);
       tree = makeHuffTree(argv[1]);
-      outputTree(tree, asciiGram);
+      printTree(tree);
       freeHeapList();
       return 0;
    }

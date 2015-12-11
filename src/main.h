@@ -3,4 +3,5 @@
 
 #include "types.h"
 #include "huffman.h"
+#include "printTree.h"
 #endif

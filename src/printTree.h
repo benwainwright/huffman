@@ -9,6 +9,9 @@ int numOfRights(letter_t* tree);
 int leftDepth(letter_t* tree);
 void print2DArray(char** array, int h, int w);
 void create2Darray(char*** array, int h, int w);
+void printTreeRecurse(letter_t* tree, char** output, int y, int x);
+void printTree(letter_t* tree);
+void printLeftBranchLine(char** output, int y, int x);
 
 
 #endif

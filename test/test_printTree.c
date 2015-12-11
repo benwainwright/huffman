@@ -55,3 +55,10 @@ void testPrint2DArray(void)
    array[2][2] = 'd';
    print2DArray(array, 4, 4);
 }
+
+void testPrintTree(void)
+{
+   letter_t* tree = dummyTree();
+   printf("Printing tree: \n");
+   printTree(tree);
+}
