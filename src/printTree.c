@@ -35,3 +35,13 @@ int leftDepth(letter_t* tree)
       return fromRight;
    }
 }
+
+void create2Darray(char*** array, int h, int w)
+{
+   int i;
+   char** local = (char**)allocate(sizeof(char*) * h);
+   for(i = 0; i < w; i++) {
+      local[i] = (char*)allocate(sizeof(char) * w);
+   }
+   *array = local;
+}

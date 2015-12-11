@@ -1,6 +1,8 @@
 #include "unity.h"
 #include "printTree.h"
 #include "dummyTree.c"
+#include "memory.h"
+#include "utilities.h"
 
 void testNumOfRightsReturnsCorrectNum(void)
 {
@@ -30,4 +32,15 @@ void testLeftDepthReturnsCorrectNum(void)
 void testLeftDepthReturnsZeroWhenGivenNull(void)
 {
    TEST_ASSERT_EQUAL_INT(0, leftDepth(NULL));
+}
+
+
+void testCreate2DarrayDoesntSetsAPointer(void)
+{
+   char** array = NULL;
+   create2Darray(&array , 4, 4);
+   TEST_ASSERT_NOT_NULL(array);
+   TEST_ASSERT_NOT_NULL(array[0]);
+   array[0][0] = 'a';
+   TEST_ASSERT_EQUAL_INT('a', array[0][0]);
 }
