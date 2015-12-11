@@ -41,6 +41,6 @@ void testCreate2DarrayDoesntSetsAPointer(void)
    create2Darray(&array , 4, 4);
    TEST_ASSERT_NOT_NULL(array);
    TEST_ASSERT_NOT_NULL(array[0]);
-   array[0][0] = 'a';
-   TEST_ASSERT_EQUAL_INT('a', array[0][0]);
+   array[3][2] = 'a';
+   TEST_ASSERT_EQUAL_INT('a', array[3][2]);
 }
