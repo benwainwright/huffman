@@ -4,7 +4,7 @@ SRC=$(wildcard src/*.c)
 OUT=huffman
 CFLAGS= -pedantic -Wall -Wextra -Wfloat-equal -ansi
 OPT= -O3
-DEBUG = -g -Og
+DEBUG = -g
 LIBS= -lm
 
 all: $(SRC)
