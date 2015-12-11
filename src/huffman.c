@@ -78,7 +78,8 @@ void makeFileAsciiGram(char* file, letter_t** asciiGram)
    *asciiGram = (letter_t*)callocate(ASCIILETTERS, sizeof(letter_t));
    initAsciigram(*asciiGram);
    do {
-      if((c = getc(fh)) != EOF && c < ASCIILETTERS) {
+      c = toupper(getc(fh));
+      if(isalpha(c) && c != EOF) {
          (*asciiGram)[c].freq++;
       }
    } while(!feof(fh) && !ferror(fh));

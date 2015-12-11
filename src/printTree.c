@@ -25,12 +25,12 @@ void printLeftBranchLine(char** output, int y, int x)
 }
 void printTreeRecurse(letter_t* tree, char** output, int y, int x)
 {
-   int rightDistance = numOfRights(tree->left);
+   int rightDistance = (numOfRights(tree->left) * 2) + 2;
 
-   output[y][x] = 'x';
+   output[y][x] = tree->letter != '\0'? tree->letter : '#';
    if(tree->right != NULL) {
-      printTreeRecurse(tree->right, output, y, x + (rightDistance * 2) + 2);
-      printRightBranchLine(output, y, x, (rightDistance * 2) + 2);
+      printTreeRecurse(tree->right, output, y, x + rightDistance);
+      printRightBranchLine(output, y, x, rightDistance);
    }
    if(tree->left != NULL) {
       printTreeRecurse(tree->left, output, y + 2, x);
