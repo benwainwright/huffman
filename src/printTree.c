@@ -1,5 +1,7 @@
 #include "printTree.h"
 
+
+
 int numOfRights(letter_t* tree)
 {
    int fromLeft = 0, fromRight = 0;
@@ -38,10 +40,13 @@ int leftDepth(letter_t* tree)
 
 void create2Darray(char*** array, int h, int w)
 {
-   int i;
+   int x, y;
    char** local = (char**)allocate(sizeof(char*) * h);
-   for(i = 0; i < w; i++) {
-      local[i] = (char*)allocate(sizeof(char) * w);
+   for(y = 0; y < h; y++) {
+      local[y] = (char*)allocate(sizeof(char) * w);
+      for(x = 0; x < w; x++) {
+         local[y][x] = ' ';
+      }
    }
    *array = local;
 }
