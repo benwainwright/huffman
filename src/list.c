@@ -125,7 +125,6 @@ void duplicateLetter(letter_t** dest, letter_t* source)
 
 void insertSorted(list_t* list, letter_t* letter)
 {
-   int i = 0;
    letter_t* seek = list->start;
    while(seek != NULL) {
       if (letter->freq < seek->freq) {

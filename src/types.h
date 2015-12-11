@@ -1,5 +1,11 @@
 #ifndef types_H
 #define types_H
+
+typedef enum returnCodes {
+   SUCCESS,
+   USAGE_ERROR
+} return_t;
+
 typedef struct letter {
    int letter;
    int freq;
@@ -13,7 +19,6 @@ typedef struct letter {
 typedef struct nodeList {
    letter_t* start;
    letter_t* end;
-   int notTagged;
    int length;
 } list_t;
 

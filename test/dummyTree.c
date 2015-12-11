@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stdlib.h>
 
 letter_t* dummyTree(void)
 {
@@ -25,7 +26,6 @@ letter_t* dummyTree(void)
    root->right->right->right = NULL;
    return root;
 }
-
 
 letter_t* dummyTree2(void)
 {
