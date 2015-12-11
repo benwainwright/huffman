@@ -59,6 +59,8 @@ void testPrint2DArray(void)
 void testPrintTree(void)
 {
    letter_t* tree = dummyTree();
-   printf("Printing tree: \n");
+   letter_t* tree1 = dummyTree2();
    printTree(tree);
+   printf("\n\n");
+   printTree(tree1);
 }

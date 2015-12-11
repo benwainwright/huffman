@@ -1,4 +1,4 @@
-#include "display.h"
+#include "drawTree.h"
 
 
 SDL_Window* initSDLWindow(char* title, position_t pos, dimension_t dim)
@@ -45,4 +45,15 @@ void sdlDie(const char* context)
 void sdlError(const char* context) {
    fprintf(stderr, "Error: %s", SDL_GetError());
    fprintf(stderr, " (occurred in context: %s)", context);
+}
+
+void createLevelArray(letter_t* tree, queue_t*** array)
+{
+
+}
+
+void queueLeaves(letter_t* tree, queue_t* queue)
+{
+   addToQueue(queue, tree->left);
+   addToQueue(queue, tree->right);
 }
