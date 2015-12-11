@@ -44,6 +44,48 @@ void testMultipleQueueAddsAreAddedCorrectly(void)
    TEST_ASSERT_EQUAL_PTR(secondLetter, queue.back->next);
 }
 
+void testQueueLengthIsIncreasedCorrectly(void) {
+   queue_t queue;
+   letter_t* firstLetter = (letter_t*)malloc(sizeof(letter_t));
+   letter_t* secondLetter = (letter_t*)malloc(sizeof(letter_t));
+   letter_t* thirdLetter = (letter_t*)malloc(sizeof(letter_t));
+
+   initQueue(&queue);
+   TEST_ASSERT_EQUAL_INT(0, queue.length);
+
+   addToQueue(&queue, firstLetter);
+   TEST_ASSERT_EQUAL_INT(1, queue.length);
+
+   addToQueue(&queue, secondLetter);
+   TEST_ASSERT_EQUAL_INT(2, queue.length);
+
+   addToQueue(&queue, thirdLetter);
+   TEST_ASSERT_EQUAL_INT(3, queue.length);
+}
+
+void testRemoveFromQueueDecreasesLengthCorrectly(void) {
+   queue_t queue;
+   letter_t* firstLetter = (letter_t*)malloc(sizeof(letter_t));
+   letter_t* secondLetter = (letter_t*)malloc(sizeof(letter_t));
+   letter_t* thirdLetter = (letter_t*)malloc(sizeof(letter_t));
+
+   letter_t* result;
+   initQueue(&queue);
+   TEST_ASSERT_EQUAL_INT(0, queue.length);
+
+   addToQueue(&queue, firstLetter);
+   addToQueue(&queue, firstLetter);
+   TEST_ASSERT_EQUAL_INT(2, queue.length);
+
+   getFromQueue(&queue);
+   TEST_ASSERT_EQUAL_INT(1, queue.length);
+   addToQueue(&queue, firstLetter);
+   TEST_ASSERT_EQUAL_INT(2, queue.length);
+   getFromQueue(&queue);
+   getFromQueue(&queue);
+   TEST_ASSERT_EQUAL_INT(0, queue.length);
+}
+
 void testGetFromQueueGetsCorrectItemFirstTime(void)
 {
    queue_t queue;

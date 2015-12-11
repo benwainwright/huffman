@@ -10,6 +10,7 @@ void initQueue(queue_t* queue)
 {
    queue->front = NULL;
    queue->back = NULL;
+   queue->length = 0;
 }
 
 
@@ -24,6 +25,9 @@ void addToQueue(queue_t* queue, letter_t* word)
    else {
       queue->front = word;
    }
+
+   /* TODO test for intiger overflow */
+   queue->length++;
 }
 
 letter_t* getFromQueue(queue_t* queue)
@@ -35,6 +39,9 @@ letter_t* getFromQueue(queue_t* queue)
    }
    else {
       queue->front = queue->front->prev;
+   }
+   if (queue->length > 0) {
+      queue->length--;
    }
    return front;
 }

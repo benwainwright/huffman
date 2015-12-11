@@ -45,6 +45,7 @@ typedef struct code {
 } code_t;
 
 typedef struct queue {
+   int length;
    letter_t* front;
    letter_t* back;
 } queue_t;
