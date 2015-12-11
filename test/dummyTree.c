@@ -1,6 +1,16 @@
 #include "types.h"
 #include <stdlib.h>
 
+/*
+#---#-#
+|   |
+#-# #
+    |
+    #
+    |
+    #
+    |
+    # */
 letter_t* dummyTree(void)
 {
    letter_t* root = (letter_t*)malloc(sizeof(letter_t));
@@ -26,6 +36,16 @@ letter_t* dummyTree(void)
    root->right->right->right = NULL;
    return root;
 }
+
+/*
+  #-----#-#
+  |     |
+  #-#   #
+  |
+  #-#
+  |
+  #
+ */
 
 letter_t* dummyTree2(void)
 {
