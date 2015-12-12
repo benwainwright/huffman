@@ -2,10 +2,10 @@
 # But you can replace it with a particular filename if you want
 SRC=$(wildcard src/*.c)
 OUT=huffman
-CFLAGS= -pedantic -Wall -Wextra -Wfloat-equal -ansi
+CFLAGS= -pedantic -Wall -Wextra -Wfloat-equal -ansi $(shell pkg-config sdl2 --cflags)
 OPT= -O3
 DEBUG = -g
-LIBS= -lm
+LIBS= -lm $(shell pkg-config sdl2 --libs)
 
 all: $(SRC)
 	gcc $(SRC) -o $(OUT) $(CFLAGS) $(OPT) $(LIBS)
