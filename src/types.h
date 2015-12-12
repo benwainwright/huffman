@@ -17,10 +17,7 @@ typedef struct colourRGB {
    int b;
 } rgb_t;
 
-typedef enum returnCodes {
-   SUCCESS,
-   USAGE_ERROR
-} return_t;
+
 
 typedef struct letter {
    int letter;
@@ -29,8 +26,14 @@ typedef struct letter {
    struct letter* next;
    struct letter* left;
    struct letter* right;
+   position_t pos;
 } letter_t;
 
+typedef struct tree {
+   position_t pos;
+   dimension_t dim;
+   letter_t* root;
+} tree_t;
 
 typedef struct nodeList {
    letter_t* start;
