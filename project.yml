@@ -10,9 +10,6 @@
    :output: huffman
    :use_assembly: FALSE
 
-:environment:
-   - :ld_library_path: /usr/local/lib
-
 :extension:
    :executable: .out
 
@@ -25,7 +22,7 @@
    :support:
       - test/support
    :include:
-      - /usr/local/include/SDL2
+      - /usr//include/SDL2
    :libraries:
       - /usr/local/lib
 
@@ -93,8 +90,8 @@
       :arguments:
          - ${1}
          - -o "${2}"
-         - -L$: PATHS_LIBRARIES
          - "#{`pkg-config #{PKGCONFIG} --libs`}"
+         - -lm
 
 
    :release_compiler:
