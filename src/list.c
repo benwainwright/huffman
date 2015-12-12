@@ -15,8 +15,6 @@ void initList(list_t* list)
    letter_t* node = initListNode(NULL, NULL);
    list->start = node;
    list->end = node;
-   list->start->letter = EMPTY;
-   list->start->freq = 0;
    list->length = 0;
 }
 
@@ -27,6 +25,8 @@ letter_t* initListNode(letter_t* prev, letter_t* next)
    node->prev = prev;
    node->left = NULL;
    node->right = NULL;
+   node->freq = 0;
+   node->letter = EMPTY;
    return node;
 }
 
@@ -63,8 +63,6 @@ void removeFromList(list_t* list, letter_t* letter)
    list->length--;
 }
 
-
-
 letter_t* addListNode(letter_t* end)
 {
    letter_t* newNode = initListNode(end, NULL);
@@ -80,7 +78,6 @@ void addToList(list_t* list, char letter)
    list->end->letter = letter;
    list->length++;
 }
-
 
 void reverseList(list_t* list)
 {
@@ -102,6 +99,7 @@ void reverseNexts(letter_t* end)
    }
 }
 
+/* TODO Consider writing quicksort */
 list_t insertionSort(letter_t* asciiGram, int length)
 {
 
@@ -135,6 +133,7 @@ void insertSorted(list_t* list, letter_t* letter)
    }
    insertAtEnd(letter, list);
 }
+
 void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
 {
    if(listIsEmpty(list)) {
@@ -154,7 +153,6 @@ void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
    list->length++;
 }
 
-
 void replaceOnlyItem(letter_t* item, list_t* list)
 {
    list->start = item;
@@ -165,17 +163,18 @@ void replaceOnlyItem(letter_t* item, list_t* list)
 }
 void insertAtEnd(letter_t* item, list_t* list)
 {
-   if(listIsEmpty(list)) {
-      replaceOnlyItem(item, list);
-   } else {
-      item->next = NULL;
-      item->prev = list->end;
-      list->end->next = item;
-      list->end = item;
+   if (item != NULL) {
+      if(listIsEmpty(list)) {
+         replaceOnlyItem(item, list);
+      } else {
+         item->next = NULL;
+         item->prev = list->end;
+         list->end->next = item;
+         list->end = item;
+      }
+      list->length++;
    }
-   list->length++;
 }
-
 
 void printList(list_t list)
 {
@@ -198,8 +197,6 @@ int listIsEmpty(list_t* list)
 {
    return (list->end == list->start && list->start->letter == EMPTY);
 }
-
-
 
 void reversePrevs(letter_t* start)
 {
