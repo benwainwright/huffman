@@ -4,6 +4,7 @@
 #include "memory.h"
 #include "dummyList.h"
 
+
 int listLength(list_t list);
 letter_t* copyLLIntoArray(list_t list);
 
@@ -212,7 +213,7 @@ void testListLengthWorksProperly(void)
 
 }
 
-testInsertAtEndPutsItemAtEndOfList(void)
+void testInsertAtEndPutsItemAtEndOfList(void)
 {
    list_t list = dummyList();
    letter_t insertLetter;
@@ -221,7 +222,7 @@ testInsertAtEndPutsItemAtEndOfList(void)
    insertAtEnd(&insertLetter, &list);
    TEST_ASSERT_NOT_NULL(list.end);
    TEST_ASSERT_EQUAL_INT('r', list.end->letter);
-   TEST_ASSERT_EQUAL_INT('r', list.start->next->next->next->next->next->next->next->next);
+   TEST_ASSERT_EQUAL_INT('r', list.start->next->next->next->next->next->next->next->next->letter);
 }
 
 void testInsertAtEndPutsItemInEmptyListCorrectly(void)
