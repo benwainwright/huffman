@@ -4,7 +4,8 @@
 #include "types.h"
 #include "huffman.h"
 #include "printTree.h"
-#include "display.h"
-#include <sdl.h>
+#include "drawTree.h"
+
+#include <SDL.h>
 #include <unistd.h>
 #endif

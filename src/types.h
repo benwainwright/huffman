@@ -1,23 +1,19 @@
 #ifndef types_H
 #define types_H
 
-typedef struct position {
-   int y;
-   int x;
-} position_t;
 
 typedef struct dimensions {
+   int y;
+   int x;
    int h;
    int w;
-} dimension_t;
+} dims_t;
 
 typedef struct colourRGB {
    int r;
    int g;
    int b;
 } rgb_t;
-
-
 
 typedef struct letter {
    int letter;
@@ -26,12 +22,11 @@ typedef struct letter {
    struct letter* next;
    struct letter* left;
    struct letter* right;
-   position_t pos;
+   dims_t pos;
 } letter_t;
 
 typedef struct tree {
-   position_t pos;
-   dimension_t dim;
+   dims_t dims;
    letter_t* root;
 } tree_t;
 

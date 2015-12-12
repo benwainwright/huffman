@@ -3,10 +3,10 @@
 tree_t* initTree(letter_t* root, int h, int w, int x, int y)
 {
    tree_t* tree = (tree_t*)allocate(sizeof(tree_t));
-   tree->pos.x = x;
-   tree->pos.y = y;
-   tree->dim.w = w;
-   tree->dim.h = h;
+   tree->dims.x = x;
+   tree->dims.y = y;
+   tree->dims.w = w;
+   tree->dims.h = h;
    tree->root = root;
    return tree;
 }
