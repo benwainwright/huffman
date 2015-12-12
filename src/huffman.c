@@ -1,61 +1,20 @@
 #include "huffman.h"
 
-code_t* getCode(letter_t* tree, char c, int i)
+tree_t* initTree(letter_t* root, int h, int w, int x, int y)
 {
-   code_t* code = NULL;
-   if(tree == NULL) {
-      return NULL;
-   }
-   if(tree->letter == c) {
-      return initCode(i, tree->freq);
-   }
-   if((code = getCode(tree->left, c, i + 1)) != NULL) {
-      code->bits[i] = '0';
-      return code;
-   }
-   if((code = getCode(tree->right, c, i + 1)) != NULL) {
-      code->bits[i] = '1';
-      return code;
-   }
-   return NULL;
+   tree_t* tree = (tree_t*)allocate(sizeof(tree_t));
+   tree->pos.x = x;
+   tree->pos.y = y;
+   tree->dim.w = w;
+   tree->dim.h = h;
+   tree->root = root;
+   return tree;
 }
 
-code_t* initCode(int length, int freq)
-{
-   code_t* code = (code_t*)allocate(sizeof(code_t));
-   code->bits = (char*)allocate(sizeof(char) * (length + NULLCHARLEN));
-   code->bits[length] = '\0';
-   code->freq = freq;
-   return code;
-}
-
-void outputTree(letter_t* tree, letter_t* asciiGram)
-{
-   code_t* code;
-   int c, freq, len, bitCount = 0;
-   for(c = '\0'; c < '~'; c++) {
-      if(asciiGram[c].freq > 0) {
-         code = getCode(tree, c, 0);
-         freq = code->freq;
-         len = strlen(code->bits);
-         if(isprint(c)) {
-            printf("'%c'", c);
-         }
-         else {
-            printf("%03d", (int) c);
-         }
-         printf(" : %24s ( %4d * %6d )\n", code->bits, len, freq);
-         bitCount += freq * len;
-      }
-   }
-   printf("%d bytes\n", bitCount / 8);
-}
-
-letter_t* makeHuffTree(char* fileName)
+tree_t* makeHuffTree(char* fileName)
 {
    letter_t* asciiGram = NULL, *parent = NULL, *left = NULL, *right = NULL;
    list_t sortedList;
-
    makeFileAsciiGram(fileName, &asciiGram);
    sortedList = insertionSort(asciiGram, ASCIILETTERS);
    deleteZerosFromList(&sortedList);
@@ -64,11 +23,13 @@ letter_t* makeHuffTree(char* fileName)
       removeFromList(&sortedList, left = sortedList.start);
       removeFromList(&sortedList, right = sortedList.start);
       parent = createSubTree(left, right);
+
       if(sortedList.length > 0) {
          insertSorted(&sortedList, parent);
       }
    }
-   return parent;
+
+   return initTree(parent, 0, 0, 0, 0);
 }
 
 void makeFileAsciiGram(char* file, letter_t** asciiGram)

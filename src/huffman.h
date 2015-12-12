@@ -19,7 +19,7 @@ letter_t* createSubTree(letter_t* left, letter_t* right);
 void makeFileAsciiGram(char* file, letter_t** asciiGram);
 letter_t* allocNode(int freq, letter_t* left, letter_t* right, char c);
 void printLetterArray(letter_t* array, int length);
-letter_t* makeHuffTree(char* fileName);
+tree_t* makeHuffTree(char* fileName);
 void outputTree(letter_t* tree, letter_t* asciiGram);
 code_t* getCode(letter_t* tree, char c, int i);
 code_t* initCode(int length, int freq);
@@ -28,5 +28,6 @@ void printAsciiGram(letter_t* asciiGram, int length);
 void replaceOnlyItem(letter_t* item, list_t* list);
 int numOfRights(letter_t* tree);
 int leftDepth(letter_t* tree);
+tree_t* initTree(letter_t* root, int h, int w, int x, int y);
 
 #endif

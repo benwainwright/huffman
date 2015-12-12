@@ -35,17 +35,8 @@ void testCreateSubTreet(void)
 
 void testMakeHuffTree(void)
 {
-   letter_t* tree = makeHuffTree("shortTest.txt");
+   tree_t* tree = makeHuffTree("shortTest.txt");
    TEST_ASSERT_NOT_NULL(tree);
-   TEST_ASSERT_EQUAL_INT(12, tree->freq);
-}
-
-
-void testOutputTree(void)
-{
-   letter_t* tree = NULL;
-   letter_t* asciiGram = NULL;
-   makeFileAsciiGram("testFile1.txt", &asciiGram);
-   tree = makeHuffTree("testFile1.txt");
-   outputTree(tree, asciiGram);
+   TEST_ASSERT_NOT_NULL(tree->root);
+   TEST_ASSERT_EQUAL_INT(12, tree->root->freq);
 }
