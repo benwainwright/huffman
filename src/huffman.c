@@ -1,56 +1,5 @@
 #include "huffman.h"
 
-code_t* getCode(letter_t* tree, char c, int i)
-{
-   code_t* code = NULL;
-   if(tree == NULL) {
-      return NULL;
-   }
-   if(tree->letter == c) {
-      return initCode(i, tree->freq);
-   }
-   if((code = getCode(tree->left, c, i + 1)) != NULL) {
-      code->bits[i] = '0';
-      return code;
-   }
-   if((code = getCode(tree->right, c, i + 1)) != NULL) {
-      code->bits[i] = '1';
-      return code;
-   }
-   return NULL;
-}
-
-code_t* initCode(int length, int freq)
-{
-   code_t* code = (code_t*)allocate(sizeof(code_t));
-   code->bits = (char*)allocate(sizeof(char) * (length + NULLCHARLEN));
-   code->bits[length] = '\0';
-   code->freq = freq;
-   return code;
-}
-
-void outputTree(letter_t* tree, letter_t* asciiGram)
-{
-   code_t* code;
-   int c, freq, len, bitCount = 0;
-   for(c = '\0'; c < '~'; c++) {
-      if(asciiGram[c].freq > 0) {
-         code = getCode(tree, c, 0);
-         freq = code->freq;
-         len = strlen(code->bits);
-         if(isprint(c)) {
-            printf("'%c'", c);
-         }
-         else {
-            printf("%03d", (int) c);
-         }
-         printf(" : %24s ( %4d * %6d )\n", code->bits, len, freq);
-         bitCount += freq * len;
-      }
-   }
-   printf("%d bytes\n", bitCount / 8);
-}
-
 letter_t* makeHuffTree(char* fileName)
 {
    letter_t* asciiGram = NULL, *parent = NULL, *left = NULL, *right = NULL;
@@ -97,22 +46,15 @@ void initAsciigram(letter_t* asciiGram)
    }
 }
 
-void printAsciiGram(letter_t* asciiGram, int length)
-{
-   int i;
-   for(i = 0; i < length; i++) {
-      printf("%d, Letter %c, freq %d\n", i, asciiGram[i].letter, asciiGram[i].freq);
-   }
-
-}
-
 letter_t* createSubTree(letter_t* left, letter_t* right)
 {
    letter_t* parent = (letter_t*)allocate(sizeof(letter_t));
    parent->freq = left->freq + right->freq;
    parent->letter = 0;
-   parent->left = allocNode(left->freq, left->left, left->right, left->letter);
-   parent->right = allocNode(right->freq, right->left, right->right, right->letter);
+   parent->left = allocNode(left->freq, left->left,
+                            left->right, left->letter);
+   parent->right = allocNode(right->freq, right->left,
+                             right->right, right->letter);
    return parent;
 }
 

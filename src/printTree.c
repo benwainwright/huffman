@@ -1,7 +1,5 @@
 #include "printTree.h"
 
-
-
 void printTree(letter_t* tree)
 {
    int height = leftDepth(tree) * 2;
@@ -23,19 +21,32 @@ void printLeftBranchLine(char** output, int y, int x)
 {
    output[y + 1][x] = '|';
 }
-void printTreeRecurse(letter_t* tree, char** output, int y, int x)
-{
-   int rightDistance = (numOfRights(tree->left) * 2) + 2;
 
-   output[y][x] = tree->letter != '\0'? tree->letter : '#';
-   if(tree->right != NULL) {
-      printTreeRecurse(tree->right, output, y, x + rightDistance);
-      printRightBranchLine(output, y, x, rightDistance);
+char getNodeChar(letter_t* node)
+{
+   if(node->letter == '\0') {
+      return '#';
    }
-   if(tree->left != NULL) {
-      printTreeRecurse(tree->left, output, y + 2, x);
+   return node->letter;
+}
+
+void printTreeRecurse(letter_t* node, char** output, int y, int x)
+{
+   int rDistance = numOfRights(node->left) * R_BRANCH_INIT_LEN
+                 + R_BRANCH_INIT_LEN;
+
+   output[y][x] = getNodeChar(node);
+
+   if(node->right != NULL) {
+      printTreeRecurse(node->right, output, y, x + rDistance);
+      printRightBranchLine(output, y, x, rDistance);
+   }
+
+   if(node->left != NULL) {
+      printTreeRecurse(node->left, output, y + 2, x);
       printLeftBranchLine(output, y, x);
    }
+
 }
 
 int numOfRights(letter_t* tree)

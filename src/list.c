@@ -63,8 +63,6 @@ void removeFromList(list_t* list, letter_t* letter)
    list->length--;
 }
 
-
-
 letter_t* addListNode(letter_t* end)
 {
    letter_t* newNode = initListNode(end, NULL);
@@ -79,27 +77,6 @@ void addToList(list_t* list, char letter)
    }
    list->end->letter = letter;
    list->length++;
-}
-
-
-void reverseList(list_t* list)
-{
-   letter_t* end = NULL;
-   reverseNexts(list->end);
-   reversePrevs(list->end);
-   end = list->start;
-   list->start = list->end;
-   list->end = end;
-}
-
-void reverseNexts(letter_t* end)
-{
-   letter_t* next = end;
-   while(end != NULL) {
-      end = end->prev;
-      next->next = end;
-      next = next->next;
-   }
 }
 
 list_t insertionSort(letter_t* asciiGram, int length)
@@ -154,7 +131,6 @@ void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list)
    list->length++;
 }
 
-
 void replaceOnlyItem(letter_t* item, list_t* list)
 {
    list->start = item;
@@ -176,60 +152,7 @@ void insertAtEnd(letter_t* item, list_t* list)
    list->length++;
 }
 
-
-void printList(list_t list)
-{
-   letter_t* seek = list.start;
-   int character = 0;
-
-   while(seek != NULL)
-   {
-      if (isprint(seek->letter)) {
-         character = seek->letter;
-      }
-      else {
-         character = 'x';
-      }
-      printf("%c(%d) ", character, seek->freq);
-      seek = seek->next;
-   }
-}
 int listIsEmpty(list_t* list)
 {
    return (list->end == list->start && list->start->letter == EMPTY);
-}
-
-
-
-void reversePrevs(letter_t* start)
-{
-   letter_t* prev = NULL;
-   while(start != NULL) {
-      start->prev = prev;
-      prev = start;
-      start = start->next;
-   }
-}
-
-list_t duplicateList(list_t* list)
-{
-   list_t dupeList;
-   letter_t* seek = NULL, *newNode = NULL;
-
-   seek = list->start;
-   do {
-      newNode = initListNode(newNode, NULL);
-      newNode->letter = seek->letter;
-      if(newNode->prev == NULL) {
-         dupeList.start = newNode;
-      }
-      else {
-         newNode->prev->next = newNode;
-      }
-      seek = seek->next;
-   } while(seek != NULL);
-   newNode->prev->next = newNode;
-   dupeList.end = newNode;
-   dupeList.length = list->length;
-   return dupeList;
 }

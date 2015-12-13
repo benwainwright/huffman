@@ -1,5 +1,6 @@
 #ifndef printTree_H
 #define printTree_H
+#define R_BRANCH_INIT_LEN 2
 
 #include "types.h"
 #include "memory.h"

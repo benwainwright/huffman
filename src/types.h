@@ -15,7 +15,6 @@ typedef struct letter {
    struct letter* right;
 } letter_t;
 
-
 typedef struct nodeList {
    letter_t* start;
    letter_t* end;
