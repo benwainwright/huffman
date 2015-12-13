@@ -32,13 +32,21 @@ void closeAndDie(FILE* file, const char* message)
 
 FILE* openFile(char* file, const char* mode)
 {
+   const char* message = "Could not open file '%s'...\n";
+   char* fmessage = NULL;
+
+   /* -2 for the format specifier, + 1 for the null char */
+   int fMessageLen = strlen(file) + strlen(message) - 1;
 
    FILE* fh = fopen(file, mode);
    if(fh == NULL) {
-      die("Could not open file...\n");
+      fmessage = (char*)allocate(sizeof(char) * fMessageLen);
+      sprintf(fmessage, message, file);
+      die(fmessage);
    }
    return fh;
 }
+
 
 void dieOnReadError(FILE* fh)
 {
