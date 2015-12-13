@@ -105,6 +105,7 @@
          - -c ${1}
          - -o ${2}
          - ${4}
+         - -g
 
    :release_linker:
       :executable: gcc
@@ -113,6 +114,7 @@
          - -o "${2}"
          - "#{`pkg-config #{PKGCONFIG} --libs`}"
          - -lm
+
 
 # Ceedling defaults to using gcc for compiling, linking, etc.
 # As [:tools] is blank, gcc will be used (so long as it's in your system path)

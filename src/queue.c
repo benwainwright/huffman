@@ -15,7 +15,6 @@ void initQueue(queue_t** queue)
    *queue = thisQueue;
 }
 
-
 void addToQueue(queue_t* queue, letter_t* word)
 {
    letter_t* oldBack = queue->back;
@@ -28,7 +27,6 @@ void addToQueue(queue_t* queue, letter_t* word)
       queue->front = word;
    }
 
-   /* TODO test for integer overflow */
    queue->length++;
 }
 

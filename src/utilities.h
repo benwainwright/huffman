@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
+#include "memory.h"
+
 #define NULLCHARSIZE 1
 
 void skipLine(FILE* fh);

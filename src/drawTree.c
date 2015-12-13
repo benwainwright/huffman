@@ -1,73 +1,173 @@
+/*
+ * Huffman Code Assignment
+ *
+ * Functions in this file calculate the initial coordinates of
+ * the tree nodes, spread them out based on collision
+ * and distribution, then draw them.
+ */
+
 #include "drawTree.h"
 
 
 void drawHuffmanTree(char* filename)
 {
-   SDL_Renderer* ren = NULL;
+
    tree_t* tree = makeHuffTree(filename);
    SDL_Window* win = loadSDLwindow(filename);
-   setTreeDims(tree, WINWIDTH / 2, TREEBORDER,  WINHEIGHT - (2 * TREEBORDER), WINWIDTH - (2 * TREEBORDER));
+   loadBackgroundImage(BACKGROUNDIMAGE, win);
+
+   tree->dims.x = WINWIDTH / 2;
+   tree->dims.y = TREEBORDER;
+   tree->dims.w = WINWIDTH - (2 * TREEBORDER);
+   tree->dims.h = WINHEIGHT - (2 * TREEBORDER);
+
    calcTreeCoords(tree);
    drawTree(win, tree);
-   runEventLoop(win);
+   runEventLoop();
 }
 
-void runEventLoop(SDL_Window* win)
+void runEventLoop(void)
 {
    SDL_Event event;
    while(1) {
       while(SDL_PollEvent(&event)) {
          switch(event.type) {
-            case SDL_QUIT:
-            case SDL_MOUSEBUTTONDOWN:
             case SDL_KEYDOWN:
-            SDL_Quit();
-            exit(0);
+            case SDL_MOUSEBUTTONDOWN:
+               SDL_Quit();
+               exit(0);
+            break;
          }
       }
       SDL_Delay(getSleepLength(20));
    }
 }
 
+void spreadNodes(tree_t* tree, list_t** levelArray) {
+   int moved, i = 0;
 
-SDL_Window* loadSDLwindow(char* title)
-{
-   SDL_Window* win = NULL;
-   SDL_Renderer* ren = NULL;
-   if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-      sdlDie("SDL Initialisation");
-   }
-
-   if((win = SDL_CreateWindow(title, WINXPOS, WINYPOS, WINWIDTH, WINHEIGHT, 0)) == NULL) {
-      sdlDie("Window Creation");
-   }
-
-   ren = makeRenderer(win);
-   SDL_RenderClear(ren);
-   SDL_SetRenderDrawColor(ren, 0, 0, 0, SDL_ALPHA_OPAQUE);
-   return win;
+   do {
+      moved = doSpreadPass(tree, levelArray);
+   } while(moved == 1 && i++ < SPREAD_MAX);
 }
 
-SDL_Renderer* makeRenderer(SDL_Window* win)
+int doSpreadPass(tree_t* tree, list_t** levelArray)
 {
-   SDL_Renderer* ren = NULL;
-   if((ren = SDL_CreateRenderer(win, FIRSTDRIVER, NOFLAGS)) == NULL) {
-      sdlDie("Renderer Initialisation");
+   int depth = treeDepth(tree->root);
+   int level, moved = 0;
+   letter_t* node = NULL;
+
+   for(level = depth - 1; level > 0; level--) {
+      node = levelArray[level]->start;
+
+      while(node != NULL) {
+         if(shuffleIfCollisions(tree, node)) {
+            moved = 1;
+         }
+         if(shuffleIfNotAboveChildren(tree, node)) {
+            moved = 1;
+         }
+         node = node->next;
+      }
+   }
+   return moved;
+}
+
+int isAboveChildren(letter_t* node)
+{
+   if((node->pos.x > node->left->pos.x) &&
+      (node->pos.x < node->right->pos.x)) {
+      return 1;
+   }
+   return 0;
+}
+
+int shuffleIfNotAboveChildren(tree_t* tree, letter_t* node)
+{
+   int lspace = leftSpace(tree, node);
+   int rspace = rightSpace(tree, node);
+
+   if (node->left != NULL && node->right != NULL) {
+      if (!isAboveChildren(node) && lspace > rspace) {
+         node->pos.x -= SHUFFLEDISTANCE;
+         return 1;
+      }
+      else if (!isAboveChildren(node) && rspace > lspace) {
+         node->pos.x += SHUFFLEDISTANCE;
+         return 1;
+      }
+   }
+   return 0;
+}
+
+int shuffleIfCollisions(tree_t* tree, letter_t* node)
+{
+   int lspace = leftSpace(tree, node);
+   int rspace = rightSpace(tree, node);
+
+   if (isColliding(node)) {
+      if(lspace > rspace) {
+         moveTreeX(node, -SHUFFLEDISTANCE);
+         return 1;
+      }
+      else if (rspace > lspace) {
+         moveTreeX(node, +SHUFFLEDISTANCE);
+         return 1;
+      }
+   }
+   return 0;
+}
+
+int isColliding(letter_t* node) {
+
+   if(node->prev != NULL &&
+     ((node->pos.x - node->prev->pos.x) < NODERADIUS * 2)) {
+      return 1;
    }
 
-   if(SDL_SetRenderDrawColor(ren, BGCOLOURRED, BGCOLOURGREEN, BGCOLOURBLUE, SDL_ALPHA_OPAQUE) != 0) {
-      sdlError("Setting Renderer Draw Color");
-   };
-   return ren;
+   if(node->next != NULL &&
+     ((node->next->pos.x - node->pos.x) < NODERADIUS * 2)) {
+      return 1;
+   }
+   return 0;
 }
 
-
-Uint32 getSleepLength(Uint32 frameLength)
+int leftSpace(tree_t* tree, letter_t* node)
 {
-   Uint32 ticksUsed = SDL_GetTicks() % frameLength;
-   return frameLength - ticksUsed;
+   int treeXorigin = tree->dims.x - (tree->dims.w / 2);
+   if(node->prev != NULL) {
+      return node->pos.x - node->prev->pos.x;
+   }
+   else {
+      return node->pos.x - treeXorigin;
+   }
 }
 
+int rightSpace(tree_t* tree, letter_t* node)
+{
+   int treeXedge = tree->dims.x + (tree->dims.w / 2);
+   if(node->next != NULL) {
+      return node->next->pos.x - node->pos.x;
+   }
+   else {
+      return  treeXedge - node->pos.x;
+   }
+}
+
+void moveTreeX(letter_t* tree, int move)
+{
+   tree->pos.x += move;
+   if(tree->left != NULL) {
+      moveTreeX(tree->left, move);
+   }
+   if(tree->right != NULL) {
+      moveTreeX(tree->right, move);
+   }
+}
+
+
+/* Calculates the offset needed for a full bottom layer, then
+   multiplies to get the corrasponding initial offset */
 double getInitialOffset(double width, double depth)
 {
    double zeroIndexedDepth = depth - 1.0;
@@ -75,9 +175,11 @@ double getInitialOffset(double width, double depth)
    double baseWidth = width / (potentialNodes - 1.0);
    double baseOffset = baseWidth / 2;
    double initialOffset = baseOffset * (pow(2.0, depth - 2));
+
    if(depth > 1) {
          return initialOffset;
    }
+   return 0;
 }
 
 int getSpacing(int height, int depth)
@@ -87,101 +189,66 @@ int getSpacing(int height, int depth)
 
 void calcTreeCoords(tree_t* tree)
 {
+   list_t** levelArray = NULL;
+
    int depth = treeDepth(tree->root);
    int spacing = getSpacing(tree->dims.h, depth);
    int initialOffset = getInitialOffset(tree->dims.w, depth);
 
-   calcCoordsRecurse(tree->root, tree->dims.x, tree->dims.y, spacing, initialOffset, 0);
+   calcInitCoords(tree->root, tree->dims.x, tree->dims.y,
+                     spacing, initialOffset);
+
+   createLevelArray(tree->root, &levelArray);
+   spreadNodes(tree, levelArray);
 }
 
-void calcCoordsRecurse(letter_t* tree, int xpos, int ypos, int spacing, double offset, int level)
+void calcInitCoords(letter_t* tree, int x,
+                    int y, int yspace, double offset)
 {
+   int newY = y + yspace;
+   int newOffs = offset / 2;
 
-   tree->pos.x = xpos;
-   tree->pos.y = ypos;
+   tree->pos.x = x;
+   tree->pos.y = y;
+
    if(tree->left != NULL) {
-      calcCoordsRecurse(tree->left, xpos - (int)offset, ypos + spacing, spacing, offset / 2.0, level + 1);
+      calcInitCoords(tree->left, x - (int)offset, newY,
+                     yspace, newOffs);
    }
 
    if(tree->right != NULL) {
-      calcCoordsRecurse(tree->right, xpos + (int)offset, ypos + spacing, spacing, offset / 2.0, level + 1);
+      calcInitCoords(tree->right, x + (int)offset, newY,
+                     yspace, newOffs);
    }
 }
-
-void drawNode(SDL_Window* win, dims_t dims)
-{
-   SDL_Renderer* ren = SDL_GetRenderer(win);
-   SDL_SetRenderDrawColor(ren, 0, 0, 0, SDL_ALPHA_OPAQUE);
-   SDL_RenderDrawPoint(ren, dims.x, dims.y);
-   SDL_RenderDrawPoint(ren, dims.x + 1, dims.y);
-   SDL_RenderDrawPoint(ren, dims.x - 1, dims.y );
-   SDL_RenderDrawPoint(ren, dims.x, dims.y + 1 );
-   SDL_RenderDrawPoint(ren, dims.x, dims.y - 1 );
-   SDL_RenderDrawPoint(ren, dims.x - 1, dims.y - 1);
-   SDL_RenderDrawPoint(ren, dims.x + 1, dims.y + 1);
-   SDL_RenderDrawPoint(ren, dims.x - 1, dims.y + 1);
-   SDL_RenderDrawPoint(ren, dims.x + 1, dims.y - 1);
-}
-
-void drawLine(SDL_Renderer* ren, dims_t from, dims_t to)
-{
-   if (SDL_RenderDrawLine(ren, from.x, from.y, to.x, to.y) != 0) {
-      sdlError("Line drawing");
-   }
-}
-void setTreeDims(tree_t* tree, int x, int y, int h, int w)
-{
-   tree->dims.x = x;
-   tree->dims.y = y;
-   tree->dims.w = w;
-   tree->dims.h = h;
-}
-
-
 
 void drawTree(SDL_Window* win, tree_t* tree)
 {
+   fntrow fontdata[FNTCHARS][FNTHEIGHT];
    SDL_Renderer* ren = SDL_GetRenderer(win);
-   drawTreeRecurse(win, tree->root, 0);
+   Neill_SDL_ReadFont(fontdata, FONTFILE);
+   drawTreeRecurse(win, tree->root, 0, fontdata);
    SDL_RenderPresent(ren);
 }
 
-void drawTreeRecurse(SDL_Window* win, letter_t* node, int level)
+void drawTreeRecurse(SDL_Window* win, letter_t* node,
+                     int level,
+                     fntrow fontdata[FNTCHARS][FNTHEIGHT])
 {
 
    SDL_Renderer* ren = SDL_GetRenderer(win);
-   drawNode(win, node->pos);
+   drawNode(win, node->pos, fontdata, node->letter);
 
+   setDrawColor(ren, 0, 0, 0);
    if(node->left != NULL) {
       drawLine(ren, node->pos, node->left->pos);
-      drawTreeRecurse(win, node->left, level + 1);
+      drawTreeRecurse(win, node->left, level + 1, fontdata);
    }
 
    if(node->right != NULL) {
       drawLine(ren, node->pos, node->right->pos);
-      drawTreeRecurse(win, node->right, level + 1);
+      drawTreeRecurse(win, node->right, level + 1, fontdata);
    }
-
-}
-
-void killWindow(SDL_Window* win) {
-   if(win == NULL) {
-      fprintf(stderr, "The window that you tried to kill was a NULL pointer\n");
-   }
-   else {
-      SDL_DestroyWindow(win);
-   }
-}
-void sdlDie(const char* context)
-{
-   sdlError(context);
-   SDL_Quit();
-   exit(1);
-}
-
-void sdlError(const char* context) {
-   fprintf(stderr, "Error: %s", SDL_GetError());
-   fprintf(stderr, " (occurred in context: %s)", context);
 }
 
 int treeDepth(letter_t* tree)
@@ -202,7 +269,6 @@ int treeDepth(letter_t* tree)
    }
 }
 
-
 list_t** initLevelArray(int depth) {
    int i;
    list_t** levelArray = (list_t**)allocate(sizeof(list_t*) * depth);
@@ -221,7 +287,7 @@ void createLevelArray(letter_t* tree, list_t*** array)
    list_t** levelArray = initLevelArray(depth);
    insertAtEnd(tree, levelArray[0]);
 
-   for(i = 0; i < depth; i++) {
+   for(i = 0; i < depth - 1; i++) {
       node = levelArray[i]->start;
 
       while(node != NULL) {

@@ -19,7 +19,6 @@ void reverseList(list_t* list);
 void reverseNexts(letter_t* end);
 void reversePrevs(letter_t* start);
 void removeFromList(list_t* list, letter_t* letter);
-list_t duplicateList(list_t* list);
 void removeWordsNotLength(int length, list_t* list);
 void insertSorted(list_t* list, letter_t* letter);
 void insertBefore(letter_t* beforeThis, letter_t* item, list_t* list);
@@ -27,7 +26,6 @@ void insertAtEnd(letter_t* item, list_t* list);
 int listIsEmpty(list_t* list);
 list_t insertionSort(letter_t* asciiGram, int length);
 void duplicateLetter(letter_t** dest, letter_t* source);
-void printList(list_t list);
 void deleteZerosFromList(list_t* list);
 
 

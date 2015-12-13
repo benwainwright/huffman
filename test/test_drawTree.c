@@ -8,7 +8,6 @@
 #include "list.h"
 #include "huffman.h"
 
-
 /*
 void testDisplayWindow(void)
 {
@@ -26,16 +25,7 @@ void testDisplayWindow(void)
 
 void testDrawTree(void)
 {
-   tree_t* tree = initTree(dummyTree(), 0, 0, 0, 0);
-
-   SDL_Renderer* ren = NULL;
-   SDL_Window* win = loadSDLwindow("Test Window");
-   setTreeDims(tree, 600, 100, 600, 1024);
-   calcTreeCoords(tree);
-   if (tree != NULL) {
-      drawTree(win, tree);
-      SDL_Delay(10000);
-   }
+   drawHuffmanTree("allswell.txt");
 }
 
 void testLevelsAreCorrectlySpaced(void)
