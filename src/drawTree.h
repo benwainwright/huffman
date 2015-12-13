@@ -28,9 +28,6 @@
 #include "benSDL.h"
 
 
-SDL_Window* loadSDLwindow(char* title);
-SDL_Renderer* makeRenderer(SDL_Window* win);
-
 void queueLeaves(letter_t* tree, queue_t* queue);
 void createLevelArray(letter_t* tree, list_t*** array);
 void setTreeDims(tree_t* tree, int x, int y, int h, int w);
@@ -44,7 +41,6 @@ void drawTreeRecurse(SDL_Window* win, letter_t* node,
 int treeDepth(letter_t* tree);
 void drawTree(SDL_Window* win, tree_t* tree);
 void drawHuffmanTree(char* filename);
-void runEventLoop(void);
 int leftSpace(tree_t* tree, letter_t* node);
 int rightSpace(tree_t* tree, letter_t* node);
 void moveTreeX(letter_t* tree, int move);

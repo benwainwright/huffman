@@ -16,7 +16,9 @@
 #include <SDL.h>
 #include "types.h"
 #include "neillsdl2.h"
+#include "memory.h"
 
+void runEventLoop(SDL_Window *win);
 SDL_Window* loadSDLwindow(char* title);
 SDL_Renderer* makeRenderer(SDL_Window* win);
 Uint32 getSleepLength(Uint32 frameLength);

@@ -1,5 +1,28 @@
 #include "benSDL.h"
 
+void runEventLoop(SDL_Window *win)
+{
+   SDL_Renderer* ren = NULL;
+   SDL_Event event;
+   while(1) {
+      while(SDL_PollEvent(&event)) {
+         switch(event.type) {
+            case SDL_KEYDOWN:
+            case SDL_MOUSEBUTTONDOWN:
+               ren = SDL_GetRenderer(win);
+               SDL_Quit();
+               SDL_DestroyWindow(win);
+               SDL_DestroyRenderer(ren);
+               freeHeapList();
+               exit(0);
+            break;
+         }
+      }
+      SDL_Delay(getSleepLength(20));
+   }
+}
+
+
 
 SDL_Window* loadSDLwindow(char* title)
 {
@@ -26,7 +49,6 @@ SDL_Renderer* makeRenderer(SDL_Window* win)
    if((ren = SDL_CreateRenderer(win, FIRSTDRIVER, NOFLAGS)) == NULL) {
       sdlDie("Renderer Initialisation");
    }
-
    return ren;
 }
 
@@ -82,10 +104,10 @@ void loadBackgroundImage(const char* filename, SDL_Window* win)
    SDL_Surface* background = loadBMP(filename);
    SDL_Renderer* ren = SDL_GetRenderer(win);
    SDL_Texture* bgTexture = textureFromSurface(ren, background);
-
    SDL_FreeSurface(background);
    rendClear(ren);
    rendCopy(ren, bgTexture, NULL, NULL);
+   SDL_DestroyTexture(bgTexture);
 }
 
 void drawFilledCircleWithBorder(SDL_Renderer *ren, int x, int y, int r) {
@@ -134,7 +156,7 @@ void sdlError(const char* context) {
 
 /* This is an adapted version of Neill_SDL_DrawChar since I don't use
    the 'simplewin' structure */
-void drawChar(SDL_Window* win, fntrow fontdata[FNTCHARS][FNTHEIGHT], 
+void drawChar(SDL_Window* win, fntrow fontdata[FNTCHARS][FNTHEIGHT],
               unsigned char chr, int ox, int oy)
 {
    SDL_Renderer* ren= SDL_GetRenderer(win);

@@ -23,25 +23,9 @@ void drawHuffmanTree(char* filename)
 
    calcTreeCoords(tree);
    drawTree(win, tree);
-   runEventLoop();
+   runEventLoop(win);
 }
 
-void runEventLoop(void)
-{
-   SDL_Event event;
-   while(1) {
-      while(SDL_PollEvent(&event)) {
-         switch(event.type) {
-            case SDL_KEYDOWN:
-            case SDL_MOUSEBUTTONDOWN:
-               SDL_Quit();
-               exit(0);
-            break;
-         }
-      }
-      SDL_Delay(getSleepLength(20));
-   }
-}
 
 void spreadNodes(tree_t* tree, list_t** levelArray) {
    int moved, i = 0;
