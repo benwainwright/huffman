@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <math.h>
 
 #include "types.h"
 #include "list.h"
@@ -24,9 +25,9 @@ void outputTree(letter_t* tree, letter_t* asciiGram);
 code_t* getCode(letter_t* tree, char c, int i);
 code_t* initCode(int length, int freq);
 void initAsciigram(letter_t* asciiGram);
-void printAsciiGram(letter_t* asciiGram, int length);
 void replaceOnlyItem(letter_t* item, list_t* list);
 int numOfRights(letter_t* tree);
 int leftDepth(letter_t* tree);
+int getBytes(int bitCount);
 
 #endif

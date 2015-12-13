@@ -48,7 +48,11 @@ void outputTree(letter_t* tree, letter_t* asciiGram)
          bitCount += freq * len;
       }
    }
-   printf("%d bytes\n", bitCount / 8);
+   printf("%d bytes\n", getBytes(bitCount));
+}
+
+int getBytes(int bitCount) {
+   return (int)ceil((double)bitCount / 8.0);
 }
 
 letter_t* makeHuffTree(char* fileName)

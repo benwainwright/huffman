@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
    letter_t* asciiGram = NULL;
 
    if(argc != 2) {
-      fprintf(stderr, "Incorrect usage, try ./%s <filename>", argv[0]);
+      fprintf(stderr, "Incorrect usage, try %s <filename>\n", argv[0]);
       return 1;
    }
    else {
