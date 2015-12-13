@@ -18,22 +18,6 @@ void testInitWordList(void)
 }
 
 
-void testDuplicateList(void)
-{
-   list_t list1 = dummyList();
-   list_t list2 = duplicateList(&list1);
-   if(list2.start != NULL) {
-      TEST_ASSERT_EQUAL_INT(list1.start->letter, list2.start->letter);
-      TEST_ASSERT_EQUAL_INT(list1.start->next->letter, list2.start->next->letter);
-      TEST_ASSERT_EQUAL_INT(list1.start->next->next->letter, list2.start->next->next->letter);
-      TEST_ASSERT_EQUAL_INT(list1.start->next->next->next->next->next->next->letter, list2.start->next->next->next->next->next->next->letter);
-      TEST_ASSERT_EQUAL_INT(list1.start->next->next->next->next->next->next->next->letter, list2.start->next->next->next->next->next->next->next->letter);
-      TEST_ASSERT_EQUAL_INT(list1.end->letter, list2.end->letter);
-   }
-   else {
-      TEST_FAIL();
-   }
-}
 
 void testInsertBeforeEndOfList(void)
 {
@@ -108,18 +92,6 @@ void testRemoveFromListRewiresEnd(void)
    TEST_ASSERT_EQUAL_PTR(before, list.end);
 }
 
-void testReverseList(void)
-{
-   list_t list = dummyList();
-   reverseList(&list);
-   TEST_ASSERT_EQUAL_INT('j', list.start->letter);
-   TEST_ASSERT_EQUAL_INT('i', list.start->next->letter);
-   TEST_ASSERT_EQUAL_INT('a', list.start->next->next->letter);
-   TEST_ASSERT_EQUAL_INT('j', list.start->next->prev->letter);
-   TEST_ASSERT_EQUAL_INT('i', list.start->next->next->prev->letter);
-   TEST_ASSERT_NULL(list.start->prev);
-   TEST_ASSERT_NULL(list.end->next);
-}
 
 void testInsertSortSortsList(void)
 {
@@ -207,10 +179,6 @@ void testListLengthWorksProperly(void)
    addToList(&list, 'n');
    addToList(&list, 'f');
    TEST_ASSERT_EQUAL_INT(4, list.length);
-
-   reverseList(&list);
-   TEST_ASSERT_EQUAL_INT(4, list.length);
-
 }
 
 void testInsertAtEndPutsItemAtEndOfList(void)

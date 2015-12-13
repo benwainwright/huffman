@@ -7,54 +7,9 @@
 #include "utilities.h"
 #include "list.h"
 #include "huffman.h"
+#include "benSDL.h"
+#include "neillsdl2.h"
 
-/*
-void testDisplayWindow(void)
-{
-   position_t position = { .x = 100, .y = 100 };
-   dimension_t dimension = { .w = 1024, .h = 768 };
-   rgb_t background = { .r = 230, .g = 12, .b = 12 };
-   SDL_Window* win = initSDLWindow("Test window", position, dimension);
-   SDL_Renderer* ren = makeRenderer(win, NOFLAGS, background);
-
-   sleep(4);
-   killWindow(win);
-}
-*/
-
-
-void testDrawTree(void)
-{
-   drawHuffmanTree("allswell.txt");
-}
-
-void testLevelsAreCorrectlySpaced(void)
-{
-   tree_t* tree = makeHuffTree("shortTest.txt");
-   int x = 100;
-   int y = 100;
-   int height = 800;
-   int width = 600;
-   int correctSpacing = height / 3;
-   setTreeDims(tree, x, y, height, width);
-   calcTreeCoords(tree);
-   TEST_ASSERT_EQUAL_INT(correctSpacing, tree->root->left->pos.y - tree->root->pos.y);
-   TEST_ASSERT_EQUAL_INT(correctSpacing, tree->root->left->right->pos.y - tree->root->left->pos.y);
-}
-
-void testCalcCoordsCorrect(void)
-{
-   tree_t* tree = initTree(dummyTree2(), 0, 0, 0, 0);
-   int x = 100;
-   int y = 100;
-   int height = 800;
-   int width = 600;
-   int correctSpacing = height / 3;
-   setTreeDims(tree, x, y, height, width);
-   calcTreeCoords(tree);
-   TEST_ASSERT_EQUAL_INT(correctSpacing, tree->root->left->pos.y - tree->root->pos.y);
-   TEST_ASSERT_EQUAL_INT(correctSpacing, tree->root->left->right->pos.y - tree->root->left->pos.y);
-}
 
 void testTreeDepth(void)
 {

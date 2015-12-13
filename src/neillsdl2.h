@@ -18,6 +18,11 @@ typedef unsigned short fntrow;
 #define M_PI           3.14159265358979323846
 #endif
 
+
+
+#ifndef SIMPLEWIN
+#define SIMPLEWIN
+
 /* All info required for windows / renderer & event loop */
 struct SDL_Simplewin {
    SDL_bool finished;
@@ -25,6 +30,8 @@ struct SDL_Simplewin {
    SDL_Renderer *renderer;
 };
 typedef struct SDL_Simplewin SDL_Simplewin;
+
+#endif
 
 void Neill_SDL_Init(SDL_Simplewin *sw);
 void Neill_SDL_Events(SDL_Simplewin *sw);
