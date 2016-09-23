@@ -14,7 +14,6 @@
 
 #include "memory.h"
 
-
 heapList_t** toHeapList(void* pnt)
 {
    static heapList_t* current = NULL;
