@@ -12,8 +12,9 @@
 void drawHuffmanTree(char* filename)
 {
 
-   tree_t* tree = makeHuffTree(filename);
-   SDL_Window* win = loadSDLwindow(filename);
+   tree_t*     tree = makeHuffTree(filename);
+   SDL_Window* win  = loadSDLwindow(filename);
+
    loadBackgroundImage(BACKGROUNDIMAGE, win);
 
    tree->dims.x = WINWIDTH / 2;
@@ -29,7 +30,6 @@ void drawHuffmanTree(char* filename)
 
 void spreadNodes(tree_t* tree, list_t** levelArray) {
    int moved, i = 0;
-
    do {
       moved = doSpreadPass(tree, levelArray);
    } while(moved == 1 && i++ < SPREAD_MAX);
@@ -37,9 +37,10 @@ void spreadNodes(tree_t* tree, list_t** levelArray) {
 
 int doSpreadPass(tree_t* tree, list_t** levelArray)
 {
-   int depth = treeDepth(tree->root);
-   int level, moved = 0;
-   letter_t* node = NULL;
+   letter_t* node  = NULL;
+   int       depth = treeDepth(tree->root);
+   int       moved = 0;
+   int       level; 
 
    for(level = depth - 1; level > 0; level--) {
       node = levelArray[level]->start;
@@ -155,10 +156,10 @@ void moveTreeX(letter_t* tree, int move)
 double getInitialOffset(double width, double depth)
 {
    double zeroIndexedDepth = depth - 1.0;
-   double potentialNodes = pow(2.0, zeroIndexedDepth);
-   double baseWidth = width / (potentialNodes - 1.0);
-   double baseOffset = baseWidth / 2;
-   double initialOffset = baseOffset * (pow(2.0, depth - 2));
+   double potentialNodes   = pow(2.0, zeroIndexedDepth);
+   double baseWidth        = width / (potentialNodes - 1.0);
+   double baseOffset       = baseWidth / 2;
+   double initialOffset    = baseOffset * (pow(2.0, depth - 2));
 
    if(depth > 1) {
          return initialOffset;
@@ -173,15 +174,13 @@ int getSpacing(int height, int depth)
 
 void calcTreeCoords(tree_t* tree)
 {
-   list_t** levelArray = NULL;
-
-   int depth = treeDepth(tree->root);
-   int spacing = getSpacing(tree->dims.h, depth);
-   int initialOffset = getInitialOffset(tree->dims.w, depth);
+   list_t** levelArray    = NULL;
+   int      depth         = treeDepth(tree->root);
+   int      spacing       = getSpacing(tree->dims.h, depth);
+   int      initialOffset = getInitialOffset(tree->dims.w, depth);
 
    calcInitCoords(tree->root, tree->dims.x, tree->dims.y,
                      spacing, initialOffset);
-
    createLevelArray(tree->root, &levelArray);
    spreadNodes(tree, levelArray);
 }
@@ -189,7 +188,7 @@ void calcTreeCoords(tree_t* tree)
 void calcInitCoords(letter_t* tree, int x,
                     int y, int yspace, double offset)
 {
-   int newY = y + yspace;
+   int newY    = y + yspace;
    int newOffs = offset / 2;
 
    tree->pos.x = x;
@@ -210,6 +209,7 @@ void drawTree(SDL_Window* win, tree_t* tree)
 {
    fntrow fontdata[FNTCHARS][FNTHEIGHT];
    SDL_Renderer* ren = SDL_GetRenderer(win);
+
    Neill_SDL_ReadFont(fontdata, FONTFILE);
    drawTreeRecurse(win, tree->root, 0, fontdata);
    SDL_RenderPresent(ren);
@@ -242,7 +242,7 @@ int treeDepth(letter_t* tree)
       return 0;
    }
 
-   fromLeft = treeDepth(tree->left);
+   fromLeft  = treeDepth(tree->left);
    fromRight = treeDepth(tree->right);
 
    if(fromLeft > fromRight) {
@@ -265,7 +265,7 @@ list_t** initLevelArray(int depth) {
 
 void createLevelArray(letter_t* tree, list_t*** array)
 {
-   int i, depth = treeDepth(tree);
+   int i, depth   = treeDepth(tree);
    letter_t* node = NULL;
 
    list_t** levelArray = initLevelArray(depth);

@@ -9,17 +9,19 @@
 void initQueue(queue_t** queue)
 {
    queue_t* thisQueue = (queue_t*)allocate(sizeof(queue_t));
-   thisQueue->front = NULL;
-   thisQueue->back = NULL;
+
+   thisQueue->front  = NULL;
+   thisQueue->back   = NULL;
    thisQueue->length = 0;
-   *queue = thisQueue;
+   *queue            = thisQueue;
 }
 
 void addToQueue(queue_t* queue, letter_t* word)
 {
    letter_t* oldBack = queue->back;
+
    queue->back = word;
-   word->next = oldBack;
+   word->next  = oldBack;
    if(oldBack != NULL) {
       oldBack->prev = word;
    }
@@ -35,7 +37,7 @@ letter_t* getFromQueue(queue_t* queue)
    letter_t* front = queue->front;
    if(queue->back == queue->front) {
       queue->front = NULL;
-      queue->back = NULL;
+      queue->back  = NULL;
    }
    else {
       queue->front = queue->front->prev;

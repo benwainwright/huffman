@@ -2,9 +2,10 @@
 
 void printTree(tree_t* tree)
 {
-   int height = leftDepth(tree->root) * 2;
-   int width = ((numOfRights(tree->root) + 1) * 2);
+   int height    = leftDepth(tree->root) * 2;
+   int width     = ((numOfRights(tree->root) + 1) * 2);
    char** output = NULL;
+
    create2Darray(&output, height, width);
    printTreeRecurse(tree->root, output, 0, 0);
    print2DArray(output, height, width);
@@ -52,7 +53,9 @@ void printTreeRecurse(letter_t* node, char** output, int y, int x)
 
 int numOfRights(letter_t* tree)
 {
-   int fromLeft = 0, fromRight = 0;
+   int fromLeft  = 0;
+   int fromRight = 0;
+
    if (tree == NULL) {
       return 0;
    }
@@ -70,12 +73,14 @@ int numOfRights(letter_t* tree)
 
 int leftDepth(letter_t* tree)
 {
-   int fromLeft, fromRight;
+   int fromLeft;
+   int fromRight;
+
    if (tree == NULL) {
       return 0;
    }
 
-   fromLeft = leftDepth(tree->left) + 1;
+   fromLeft  = leftDepth(tree->left) + 1;
    fromRight = leftDepth(tree->right);
 
    if (fromLeft > fromRight) {
@@ -90,6 +95,7 @@ void create2Darray(char*** array, int h, int w)
 {
    int x, y;
    char** local = (char**)allocate(sizeof(char*) * h);
+
    for(y = 0; y < h; y++) {
       local[y] = (char*)allocate(sizeof(char) * w);
       for(x = 0; x < w; x++) {

@@ -3,7 +3,7 @@
 void runEventLoop(SDL_Window *win)
 {
    SDL_Renderer* ren = NULL;
-   SDL_Event event;
+   SDL_Event     event;
    while(1) {
       while(SDL_PollEvent(&event)) {
          switch(event.type) {
@@ -24,7 +24,7 @@ void runEventLoop(SDL_Window *win)
 
 SDL_Window* loadSDLwindow(char* title)
 {
-   SDL_Window* win = NULL;
+   SDL_Window*   win = NULL;
    SDL_Renderer* ren = NULL;
    if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
       sdlDie("SDL Initialisation");
@@ -99,9 +99,9 @@ void rendCopy(SDL_Renderer* ren, SDL_Texture* tex,
 
 void loadBackgroundImage(const char* filename, SDL_Window* win)
 {
-   SDL_Surface* background = loadBMP(filename);
-   SDL_Renderer* ren = SDL_GetRenderer(win);
-   SDL_Texture* bgTexture = textureFromSurface(ren, background);
+   SDL_Surface*  background = loadBMP(filename);
+   SDL_Renderer* ren        = SDL_GetRenderer(win);
+   SDL_Texture*  bgTexture  = textureFromSurface(ren, background);
    SDL_FreeSurface(background);
    rendClear(ren);
    rendCopy(ren, bgTexture, NULL, NULL);
@@ -157,7 +157,7 @@ void sdlError(const char* context) {
 void drawChar(SDL_Window* win, fntrow fontdata[FNTCHARS][FNTHEIGHT],
               unsigned char chr, int ox, int oy)
 {
-   SDL_Renderer* ren= SDL_GetRenderer(win);
+   SDL_Renderer* ren = SDL_GetRenderer(win);
    unsigned x, y;
    for(y = 0; y < FNTHEIGHT; y++){
       for(x = 0; x < FNTWIDTH; x++){

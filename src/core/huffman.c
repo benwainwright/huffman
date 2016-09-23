@@ -13,14 +13,18 @@ tree_t* initTree(letter_t* root, int h, int w, int x, int y)
 
 tree_t* makeHuffTree(char* fileName)
 {
-   letter_t* asciiGram = NULL, *parent = NULL, *left = NULL, *right = NULL;
-   list_t sortedList;
+   letter_t* asciiGram = NULL;
+   letter_t* parent    = NULL;
+   letter_t* left      = NULL;
+   letter_t* right     = NULL;
+   list_t    sortedList;
+
    makeFileAsciiGram(fileName, &asciiGram);
    sortedList = insertionSort(asciiGram, ASCIILETTERS);
    deleteZerosFromList(&sortedList);
 
    while(sortedList.length > 1) {
-      removeFromList(&sortedList, left = sortedList.start);
+      removeFromList(&sortedList, left  = sortedList.start);
       removeFromList(&sortedList, right = sortedList.start);
       parent = createSubTree(left, right);
 
@@ -35,7 +39,7 @@ tree_t* makeHuffTree(char* fileName)
 void makeFileAsciiGram(char* file, letter_t** asciiGram)
 {
    int c;
-   FILE* fh = openFile(file, "r");
+   FILE* fh   = openFile(file, "r");
    *asciiGram = (letter_t*)callocate(ASCIILETTERS, sizeof(letter_t));
    initAsciigram(*asciiGram);
    do {
@@ -51,9 +55,9 @@ void initAsciigram(letter_t* asciiGram)
 {
    int i;
    for(i = 0; i < ASCIILETTERS; i++) {
-      asciiGram[i].prev = NULL;
-      asciiGram[i].next = NULL;
-      asciiGram[i].freq = 0;
+      asciiGram[i].prev   = NULL;
+      asciiGram[i].next   = NULL;
+      asciiGram[i].freq   = 0;
       asciiGram[i].letter = i;
    }
 }
@@ -70,19 +74,23 @@ void printAsciiGram(letter_t* asciiGram, int length)
 letter_t* createSubTree(letter_t* left, letter_t* right)
 {
    letter_t* parent = (letter_t*)allocate(sizeof(letter_t));
-   parent->freq = left->freq + right->freq;
+
+   parent->freq   = left->freq + right->freq;
    parent->letter = 0;
-   parent->left = allocNode(left->freq, left->left, left->right, left->letter);
-   parent->right = allocNode(right->freq, right->left, right->right, right->letter);
+   parent->left   = allocNode(left->freq, left->left, left->right, left->letter);
+   parent->right  = allocNode(right->freq, right->left, right->right, right->letter);
+
    return parent;
 }
 
 letter_t* allocNode(int freq, letter_t* left, letter_t* right, char c)
 {
    letter_t* returnVal = (letter_t*)allocate(sizeof(letter_t));
-   returnVal->freq = freq;
-   returnVal->left = left;
-   returnVal->right = right;
+
+   returnVal->freq   = freq;
+   returnVal->left   = left;
+   returnVal->right  = right;
    returnVal->letter = c;
+
    return returnVal;
 }

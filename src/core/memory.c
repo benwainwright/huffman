@@ -17,11 +17,11 @@
 heapList_t** toHeapList(void* pnt)
 {
    static heapList_t* current = NULL;
-   heapList_t* prev = NULL;
+   heapList_t* prev           = NULL;
 
    if(pnt != NULL) {
-      prev = current;
-      current = newHeapListNode(prev);
+      prev         = current;
+      current      = newHeapListNode(prev);
       current->pnt = pnt;
    }
    return &current;
@@ -30,8 +30,8 @@ heapList_t** toHeapList(void* pnt)
 heapList_t* newHeapListNode(heapList_t* prev)
 {
    heapList_t* newNode = (heapList_t*)allocOfflist(sizeof(heapList_t));
-   newNode->lastList = NULL;
-   newNode->prev = prev;
+   newNode->lastList   = NULL;
+   newNode->prev       = prev;
    if(prev != NULL) {
       newNode->lastList = prev->lastList;
    }
@@ -42,12 +42,13 @@ heapList_t* newHeapListNode(heapList_t* prev)
    and create a new list */
 void newHeapList(void)
 {
-   heapList_t** top = getHeapListPtr();
+   heapList_t** top   = getHeapListPtr();
    heapList_t* newTop = (heapList_t*)allocOfflist(sizeof(heapList_t));
-   newTop->pnt = NULL;
-   newTop->prev = NULL;
+
+   newTop->pnt      = NULL;
+   newTop->prev     = NULL;
    newTop->lastList = *top;
-   *top = newTop;
+   *top             = newTop;
 }
 
 /* toHeapList with NULL gets the address of current heaplist top */
@@ -65,10 +66,11 @@ heapList_t** getHeapListPtr(void)
 
 void freeHeapList(void)
 {
-   heapList_t** endPtr = getHeapListPtr();
-   heapList_t* end = *endPtr;
-   heapList_t* current = NULL;
+   heapList_t** endPtr  = getHeapListPtr();
+   heapList_t* end      = *endPtr;
+   heapList_t* current  = NULL;
    heapList_t* lastList = end->lastList;
+
    while(end->prev != NULL) {
       current = end;
       if(end->pnt != NULL) {
