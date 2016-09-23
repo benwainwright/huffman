@@ -22,6 +22,8 @@ void runEventLoop(SDL_Window *win)
    }
 }
 
+
+
 SDL_Window* loadSDLwindow(char* title)
 {
    SDL_Window* win = NULL;
